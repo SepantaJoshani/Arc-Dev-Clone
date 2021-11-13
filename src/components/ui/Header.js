@@ -76,9 +76,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "20px",
     height: "50px",
     ...theme.typography.estimate,
-    "&:hover": {
-      backgroundColor: "#FFBA60",
-    },
+    "&:hover":{
+      backgroundColor:theme.palette.secondary.light
+  },
   },
   logoContainer: {
     padding: 0,

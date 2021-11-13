@@ -1,9 +1,10 @@
 import React from "react";
+import LandingPage from "../components/LandingPage";
 
 const Home = () => {
   return (
-    <div style={{height:'100vh'}}>
-     <h1>Home</h1>
+    <div >
+     <LandingPage />
     </div>
   );
 };
