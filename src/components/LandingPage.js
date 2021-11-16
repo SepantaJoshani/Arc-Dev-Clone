@@ -1,11 +1,11 @@
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Button, Grid, Typography, useMediaQuery } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/styles";
 import React, { Fragment } from "react";
 import Lottie from "react-lottie";
 import ButtonArrow from "./ui/ButtonArrow";
 
 import animationData from "../animations/landinganimation/data";
-import CustomSoftwareIcon from '../assets/Custom Software Icon.svg'
+import CustomSoftwareIcon from "../assets/Custom Software Icon.svg";
 
 const useStyles = makeStyles((theme) => ({
   animation: {
@@ -32,16 +32,19 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "2rem",
   },
   learnBtnHero: {
-    borderColor: theme.palette.common.blue,
-    color: theme.palette.common.blue,
-    borderWidth: 2,
-    textTransform: "none",
-    borderRadius: 50,
-    fontFamily: "Roboto",
-    fontWeight: "bold",
+    ...theme.typography.learnButton,
     fontSize: "0.9rem",
     height: 45,
     width: 145,
+  },
+  learnButton: {
+    ...theme.typography.learnButton,
+    fontSize: "0.7rem",
+    height: 35,
+    padding: 5,
+    [theme.breakpoints.down('sm')]:{
+      marginBottom:'2rem'
+    }
   },
   mainContainer: {
     marginTop: "5rem",
@@ -59,11 +62,31 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: 0,
     },
   },
+  specialText: {
+    fontFamily: "Pacifico",
+    color: theme.palette.common.orange,
+  },
+  subtitle: {
+    marginBottom: "1rem",
+  },
+  icon: {
+    marginLeft: "2rem",
+    [theme.breakpoints.down("xs")]: {
+      marginLeft: 0,
+    },
+  },
+  serviceContainer: {
+    marginTop: "12rem",
+    [theme.breakpoints.down('sm')]:{
+      padding:25
+    }
+  },
 }));
 
 const LandingPage = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -111,19 +134,28 @@ const LandingPage = () => {
           </Grid>
         </Grid>
         <Grid item>
-          {" "}
           {/*-----Services Block-----*/}
-          <Grid container>
-            <Grid item>
+          <Grid
+            container
+            className={classes.serviceContainer}
+            justifyContent={matchesSM && "center"}
+          >
+            <Grid
+              item
+              style={{
+                marginLeft: !matchesSM && "5rem",
+                textAlign: matchesSM && "center",
+              }}
+            >
               <Typography variant="h4">Custom Software Development</Typography>
-              <Typography variant="subtitle1">
+              <Typography variant="subtitle1" className={classes.subtitle}>
                 Save Energy. Save Time. Save Money
               </Typography>
               <Typography variant="subtitle1">
                 Complete digital solutions, from investigation to{" "}
-                <span>celebration</span>
+                <span className={classes.specialText}>celebration</span>
               </Typography>
-              <Button variant="outlined">
+              <Button variant="outlined" className={classes.learnButton}>
                 <span style={{ marginRight: 10 }}>Learn More</span>
                 <ButtonArrow
                   width={10}
@@ -133,7 +165,11 @@ const LandingPage = () => {
               </Button>
             </Grid>
             <Grid item>
-              <img src={CustomSoftwareIcon} alt="custom software icon" />
+              <img
+                src={CustomSoftwareIcon}
+                alt="custom software icon"
+                className={classes.icon}
+              />
             </Grid>
           </Grid>
         </Grid>

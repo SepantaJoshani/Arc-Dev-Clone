@@ -37,16 +37,17 @@ const useStyles = makeStyles((theme) => ({
   icons: {
     height: "4rem",
     width: "4rem",
-    color: 'white',
-    [theme.breakpoints.down('xs')]:{
-        height: '2.5rem',
-        width: '2.5rem',
-    }
+    color: "white",
+    margin: "0.25rem",
+    [theme.breakpoints.down("xs")]: {
+      height: "2.5rem",
+      width: "2.5rem",
+    },
   },
-  social:{
-      position: 'absolute',
-      marginTop:'-6rem',
-  }
+  social: {
+    position: "absolute",
+    marginTop: "-6rem",
+  },
 }));
 
 const Footer = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
@@ -54,7 +55,11 @@ const Footer = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
   return (
     <footer className={classes.footer}>
       <Hidden mdDown>
-        <Grid container justifyContent="center" className={classes.mainContainer}>
+        <Grid
+          container
+          justifyContent="center"
+          className={classes.mainContainer}
+        >
           <Grid item className={classes.gridItem}>
             <Grid container direction="column" spacing={2}>
               <Grid
@@ -211,7 +216,7 @@ const Footer = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
         alt="black decorative"
         className={classes.adornment}
       />
-      <Grid container justifyContent='flex-end' spacing={2} className={classes.social}>
+      <Grid container justifyContent="flex-end" className={classes.social}>
         <Grid item>
           <Facebook className={classes.icons} />
         </Grid>
