@@ -249,6 +249,9 @@ const Header = ({value,setValue,selectedIndex,setSelectedIndex}) => {
         className={classes.button}
         variant="contained"
         color="secondary"
+        component={Link}
+        to='/estimate'
+        onClick={()=>{setValue(5)}}
       >
         Free Estimate
       </Button>

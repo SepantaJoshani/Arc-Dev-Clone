@@ -4,6 +4,7 @@ import { makeStyles, useTheme } from "@material-ui/styles";
 import ButtonArrow from "./ui/ButtonArrow";
 import background from "../assets/background.jpg";
 import mobileBackground from "../assets/mobileBackground.jpg";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   learnButton: {
@@ -20,12 +21,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    backgroundAttachment:'fixed',
+    backgroundAttachment: "fixed",
     height: "60rem",
     width: "100%",
     [theme.breakpoints.down("md")]: {
       backgroundImage: `url(${mobileBackground})`,
-      backgroundAttachment:'inherit' 
+      backgroundAttachment: "inherit",
     },
   },
   estimateBtn: {
@@ -36,14 +37,18 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.5rem",
     marginRight: "5rem",
     marginLeft: "2rem",
-    [theme.breakpoints.down('sm')]:{
-        marginLeft:0,
-        marginRight:0
-    }
+    "&:hover":{
+        background: theme.palette.secondary.light
+    },
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: 0,
+      marginRight: 0,
+    },
+    
   },
 }));
 
-const CallToAction = () => {
+const CallToAction = ({ setValue}) => {
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -58,7 +63,7 @@ const CallToAction = () => {
       <Grid
         item
         style={{
-          marginLeft:matchesSM?0: "5rem",
+          marginLeft: matchesSM ? 0 : "5rem",
           textAlign: matchesSM ? "center" : "inherit",
         }}
       >
@@ -71,8 +76,18 @@ const CallToAction = () => {
             <Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>
               Take advantage of the 21st Century
             </Typography>
-            <Grid container justifyContent={matchesSM?'center':'flex-start'} item>
-              <Button variant="outlined" className={classes.learnButton}>
+            <Grid
+              container
+              justifyContent={matchesSM ? "center" : "flex-start"}
+              item
+            >
+              <Button
+                component={Link}
+                to="/revolution"
+                variant="outlined"
+                className={classes.learnButton}
+                onClick={()=>{setValue(2)}}
+              >
                 <span style={{ marginRight: 5 }}>Learn More</span>
                 <ButtonArrow
                   width={10}
@@ -85,7 +100,13 @@ const CallToAction = () => {
         </Grid>
       </Grid>
       <Grid item>
-        <Button variant="contained" className={classes.estimateBtn}>
+        <Button
+          component={Link}
+          to="/estimate"
+          variant="contained"
+          className={classes.estimateBtn}
+          onClick={()=>{setValue(5)}}
+        >
           Free Estimate
         </Button>
       </Grid>
