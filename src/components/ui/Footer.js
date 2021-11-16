@@ -109,7 +109,7 @@ const Footer = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
                 }}
                 className={classes.link}
               >
-                Mobile App Development
+                iOS/Android App Development
               </Grid>
               <Grid
                 item
