@@ -1,4 +1,11 @@
-import { Button, Grid, Typography, useMediaQuery } from "@material-ui/core";
+import {
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  useMediaQuery,
+} from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/styles";
 import React, { Fragment } from "react";
 import Lottie from "react-lottie";
@@ -6,8 +13,9 @@ import ButtonArrow from "./ui/ButtonArrow";
 
 import animationData from "../animations/landinganimation/data";
 import CustomSoftwareIcon from "../assets/Custom Software Icon.svg";
-import MobileIcon from '../assets/mobileIcon.svg'
-import WebsiteIcon from '../assets/websiteIcon.svg'
+import MobileIcon from "../assets/mobileIcon.svg";
+import WebsiteIcon from "../assets/websiteIcon.svg";
+import revolutionBackground from "../assets/repeatingBackground.svg";
 
 const useStyles = makeStyles((theme) => ({
   animation: {
@@ -83,6 +91,26 @@ const useStyles = makeStyles((theme) => ({
       padding: 25,
     },
   },
+  revolutionBackground: {
+    backgroundImage: `url(${revolutionBackground})`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    height: "100%",
+    width: "100%",
+  },
+  revolutionCard: {
+    position: "absolute",
+    boxShadow: theme.shadows[10],
+    borderRadius: 15,
+    padding: "10rem",
+    [theme.breakpoints.down('sm')]:{
+      padding:'8rem 0',
+      borderRadius:0,
+      width:'100%'
+      
+    }
+  },
 }));
 
 const LandingPage = () => {
@@ -136,7 +164,7 @@ const LandingPage = () => {
           </Grid>
         </Grid>
         <Grid item>
-          {/*-----Custom Software Block-----*/}
+          {/*--------Custom Software Block--------*/}
           <Grid
             container
             className={classes.serviceContainer}
@@ -176,16 +204,15 @@ const LandingPage = () => {
           </Grid>
         </Grid>
         <Grid item>
-          {/*-----iOS/Android Block-----*/}
+          {/*--------iOS/Android Block--------*/}
           <Grid
             container
             className={classes.serviceContainer}
-            justifyContent={matchesSM ? "center":'flex-end'}
+            justifyContent={matchesSM ? "center" : "flex-end"}
           >
             <Grid
               item
               style={{
-               
                 textAlign: matchesSM && "center",
               }}
             >
@@ -208,7 +235,7 @@ const LandingPage = () => {
             </Grid>
             <Grid item>
               <img
-              style={{ marginRight: !matchesSM && "5rem",}}
+                style={{ marginRight: !matchesSM && "5rem" }}
                 src={MobileIcon}
                 alt="Mobile phone icon"
                 className={classes.icon}
@@ -217,7 +244,7 @@ const LandingPage = () => {
           </Grid>
         </Grid>
         <Grid item>
-          {/*-----Custom Website Block-----*/}
+          {/*--------Custom Website Block--------*/}
           <Grid
             container
             className={classes.serviceContainer}
@@ -255,6 +282,45 @@ const LandingPage = () => {
               />
             </Grid>
           </Grid>
+        </Grid>
+      </Grid>
+      <Grid item>
+        {" "}
+        {/*--------Revolution Part--------*/}
+        <Grid
+          container
+          alignItems="center"
+          justifyContent="center"
+          style={{ height: "100rem",marginTop:'12rem' }}
+        >
+          <Card className={classes.revolutionCard}>
+            <CardContent>
+              <Grid
+                container
+                direction="column"
+                style={{ textAlign: "center" }}
+              >
+                <Grid item>
+                  <Typography gutterBottom variant="h3">The Revolution</Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="subtitle1">
+                    Visionary insights coupled with cutting-edge technology is a
+                    recipe for revolution.
+                  </Typography>
+                  <Button variant="outlined" className={classes.learnBtnHero}>
+                    <span style={{ marginRight: 10 }}>Learn More</span>
+                    <ButtonArrow
+                      width={15}
+                      height={15}
+                      fill={theme.palette.common.blue}
+                    />
+                  </Button>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+          <div className={classes.revolutionBackground} />
         </Grid>
       </Grid>
     </Fragment>
