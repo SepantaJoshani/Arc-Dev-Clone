@@ -17,6 +17,7 @@ import MobileIcon from "../assets/mobileIcon.svg";
 import WebsiteIcon from "../assets/websiteIcon.svg";
 import revolutionBackground from "../assets/repeatingBackground.svg";
 import infoBackground from "../assets/infoBackground.svg";
+import CallToAction from "./CallToAction";
 
 const useStyles = makeStyles((theme) => ({
   animation: {
@@ -341,14 +342,18 @@ const LandingPage = () => {
               direction={matchesXS ? "column" : "row"}
               style={{
                 position: "absolute",
-                textAlign: matchesXS ? "center" : "inherit",
+                textAlign: matchesXS ? "center" : "inherit", 
+                
               }}
+             
+              
             >
               <Grid
                 item
                 sm
                 style={{
                   marginLeft: matchesXS ? 0 : !matchesSM ? "5rem" : "2rem",
+                  marginBottom:matchesXS?'5rem':0
                 }}
               >
                 <Grid container direction="column">
@@ -376,6 +381,8 @@ const LandingPage = () => {
                 style={{
                   marginRight: matchesXS ? 0 : !matchesSM ? "5rem" : "2rem",
                   textAlign: matchesXS ? "center" : "right",
+                  marginBottom:matchesXS?'4rem':0
+                 
                 }}
               >
                 <Grid container direction="column">
@@ -404,6 +411,10 @@ const LandingPage = () => {
             <div className={classes.infoBackground} />
           </Grid>
         </Grid>
+      </Grid>
+      <Grid item>
+        {/*--------Call To Action Part--------*/}
+         <CallToAction />       
       </Grid>
     </Fragment>
   );
