@@ -37,18 +37,17 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.5rem",
     marginRight: "5rem",
     marginLeft: "2rem",
-    "&:hover":{
-        background: theme.palette.secondary.light
+    "&:hover": {
+      background: theme.palette.secondary.light,
     },
     [theme.breakpoints.down("sm")]: {
       marginLeft: 0,
       marginRight: 0,
     },
-    
   },
 }));
 
-const CallToAction = ({ setValue}) => {
+const CallToAction = ({ setValue }) => {
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
@@ -86,7 +85,9 @@ const CallToAction = ({ setValue}) => {
                 to="/revolution"
                 variant="outlined"
                 className={classes.learnButton}
-                onClick={()=>{setValue(2)}}
+                onClick={() => {
+                  setValue(2);
+                }}
               >
                 <span style={{ marginRight: 5 }}>Learn More</span>
                 <ButtonArrow
@@ -105,7 +106,9 @@ const CallToAction = ({ setValue}) => {
           to="/estimate"
           variant="contained"
           className={classes.estimateBtn}
-          onClick={()=>{setValue(5)}}
+          onClick={() => {
+            setValue(5);
+          }}
         >
           Free Estimate
         </Button>
