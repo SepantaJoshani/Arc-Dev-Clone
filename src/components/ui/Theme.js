@@ -24,6 +24,7 @@ export const theme = createTheme({
       textTransform:'none',
       fontWeight:700,
       fontSize:'1rem',
+     
     },
     estimate:{
       fontFamily:'pacifico',
@@ -60,6 +61,11 @@ export const theme = createTheme({
       fontSize:'1.25rem',
       fontWeight:300,
       color: 'white'
+    },
+    body1:{
+      fontSize:'1.25rem',
+      fontWeight:300,
+      color:arcGrey
     },
     learnButton:{
       borderColor: arcBlue,
