@@ -50,7 +50,13 @@ const Services = ({ setValue, setSelectedIndex }) => {
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   return (
     <Grid container direction="column">
-      <Grid item style={{ marginLeft: !matchesSM && "5rem",marginTop:matchesSM?'1rem':'2rem' }}>
+      <Grid
+        item
+        style={{
+          marginLeft: !matchesSM && "5rem",
+          marginTop: matchesSM ? "1rem" : "2rem",
+        }}
+      >
         <Typography
           variant="h2"
           gutterBottom
