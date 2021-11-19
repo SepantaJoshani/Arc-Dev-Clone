@@ -7,7 +7,7 @@ import {
   useMediaQuery,
 } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/styles";
-import React, { Fragment } from "react";
+import React from "react";
 import Lottie from "react-lottie";
 import ButtonArrow from "../components/ui/ButtonArrow";
 
