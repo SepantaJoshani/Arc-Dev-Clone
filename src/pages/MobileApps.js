@@ -172,7 +172,13 @@ const MobileApps = ({ setValue, setSelectedIndex }) => {
         <Grid item md>
           <Lottie options={defaultOptions} style={{ maxWidth: "20rem" }} />
         </Grid>
-        <Grid item container direction="column" md>
+        <Grid
+          item
+          container
+          direction="column"
+          style={{ marginTop: matchesXs ? "2rem" : 0 }}
+          md
+        >
           <Grid item>
             <Typography
               align={matchesSm ? "center" : "right"}
