@@ -10,7 +10,6 @@ import { makeStyles, useTheme } from "@material-ui/styles";
 import React from "react";
 import Lottie from "react-lottie";
 import ButtonArrow from "../components/ui/ButtonArrow";
-
 import { animationData } from "../animations/landinganimation/data";
 import CustomSoftwareIcon from "../assets/Custom Software Icon.svg";
 import MobileIcon from "../assets/mobileIcon.svg";
