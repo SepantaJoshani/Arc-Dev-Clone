@@ -13,12 +13,12 @@ import ForwardArrow from "../assets/forwardArrow.svg";
 import lightBulb from "../assets/bulb.svg";
 import cash from "../assets/cash.svg";
 import stopwatch from "../assets/stopwatch.svg";
-import documentsAnimation from "../animations/documentsAnimation/data";
+import {documentsAnimation} from "../animations/documentsAnimation/data";
 import Lottie from "react-lottie";
 import scaleAnimation from "../animations/scaleAnimation/data.json";
 import roots from "../assets/root.svg";
 import automationAnimation from "../animations/automationAnimation/data.json";
-import uxAnimation from "../animations/uxAnimation/data";
+import {uxAnimation} from "../animations/uxAnimation/data";
 import CallToAction from "../components/CallToAction";
 
 const useStyles = makeStyles((theme) => ({

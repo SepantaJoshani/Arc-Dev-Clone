@@ -7,6 +7,7 @@ import { useState } from "react";
 import LandingPage from "./pages/LandingPage";
 import Services from "./pages/Services";
 import CustomSoftware from "./pages/CustomSoftware";
+import MobileApps from "./pages/MobileApps";
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -55,7 +56,12 @@ function App() {
           <Route
             exact
             path="/mobileapps"
-            component={() => <div>Mobile apps</div>}
+            component={() => (
+              <MobileApps
+                setValue={setValue}
+                setSelectedIndex={setSelectedIndex}
+              />
+            )}
           />
           <Route exact path="/websites" component={() => <div>Websites</div>} />
           <Route
