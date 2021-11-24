@@ -16,6 +16,7 @@ import integrationAnimation from "../animations/integrationAnimation/data.json";
 import swiss from "../assets/swissKnife.svg";
 import access from "../assets/extendAccess.svg";
 import engagment from "../assets/increaseEngagement.svg";
+import CallToAction from "../components/CallToAction.js";
 
 const useStyles = makeStyles((theme) => ({
   heading: {
@@ -38,7 +39,9 @@ const MobileApps = ({ setValue, setSelectedIndex }) => {
   const classes = useStyles();
   const theme = useTheme();
   const matchesMd = useMediaQuery(theme.breakpoints.down("md"));
+  const matchesSm = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesXs = useMediaQuery(theme.breakpoints.down("xs"));
+
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -129,20 +132,38 @@ const MobileApps = ({ setValue, setSelectedIndex }) => {
         </Hidden>
       </Grid>
       {/*--------Integration and Simultaneous Platform Block(second)--------*/}
-      <Grid item container className={classes.rowContainer}>
+      <Grid
+        item
+        container
+        direction={matchesSm ? "column" : "row"}
+        className={classes.rowContainer}
+        style={{ marginTop: "15rem", marginBottom: "15rem" }}
+      >
         <Grid item container direction="column" md>
           <Grid item>
-            <Typography variant="h4" gutterBottom>
+            <Typography
+              align={matchesSm ? "center" : "left"}
+              variant="h4"
+              gutterBottom
+            >
               Integration
             </Typography>
           </Grid>
           <Grid item>
-            <Typography variant="body1" paragraph>
+            <Typography
+              align={matchesSm ? "center" : "left"}
+              variant="body1"
+              paragraph
+            >
               Our technology enables an innate interconnection between web and
               mobile applications, putting everything you need right in one
               convenient place.
             </Typography>
-            <Typography variant="body1" paragraph>
+            <Typography
+              align={matchesSm ? "center" : "left"}
+              variant="body1"
+              paragraph
+            >
               This allows you to extend your reach, reinvent interactions, and
               develop a stronger relationship with your users than ever before.
             </Typography>
@@ -153,16 +174,28 @@ const MobileApps = ({ setValue, setSelectedIndex }) => {
         </Grid>
         <Grid item container direction="column" md>
           <Grid item>
-            <Typography align="right" variant="h4" gutterBottom>
+            <Typography
+              align={matchesSm ? "center" : "right"}
+              variant="h4"
+              gutterBottom
+            >
               Simultaneous Platform Support
             </Typography>
           </Grid>
           <Grid item>
-            <Typography align="right" variant="body1" paragraph>
+            <Typography
+              align={matchesSm ? "center" : "right"}
+              variant="body1"
+              paragraph
+            >
               Our cutting-edge development process allows us to create apps for
               iPhone, Android, and tablets — all at the same time.
             </Typography>
-            <Typography align="right" variant="body1" paragraph>
+            <Typography
+              align={matchesSm ? "center" : "right"}
+              variant="body1"
+              paragraph
+            >
               This significantly reduces costs and creates a more unified brand
               experience across all devices.
             </Typography>
@@ -170,10 +203,16 @@ const MobileApps = ({ setValue, setSelectedIndex }) => {
         </Grid>
       </Grid>
       {/*--------Icons Block(third)--------*/}
-      <Grid item container className={classes.rowContainer}>
-        <Grid item container direction="column" alignItems='center'  md>
+      <Grid
+        item
+        container
+        direction={matchesMd ? "column" : "row"}
+        className={classes.rowContainer}
+        style={{ marginBottom: "15rem" }}
+      >
+        <Grid item container direction="column" alignItems="center" md>
           <Grid item>
-            <Typography align='center' variant="h4" gutterBottom>
+            <Typography align="center" variant="h4" gutterBottom>
               Extend Functionality
             </Typography>
           </Grid>
@@ -181,19 +220,33 @@ const MobileApps = ({ setValue, setSelectedIndex }) => {
             <img src={swiss} alt="knife" />
           </Grid>
         </Grid>
-        <Grid item container direction="column" alignItems='center' md>
+        <Grid
+          item
+          container
+          direction="column"
+          alignItems="center"
+          style={{
+            marginTop: matchesMd ? "10rem" : 0,
+            marginBottom: matchesMd ? "10rem" : 0,
+          }}
+          md
+        >
           <Grid item>
-            <Typography align='center' variant="h4" gutterBottom>
+            <Typography align="center" variant="h4" gutterBottom>
               Extend Access
             </Typography>
           </Grid>
           <Grid item>
-            <img src={access} alt="tear-one-off sign" style={{maxWidth:'28rem'}} />
+            <img
+              src={access}
+              alt="tear-one-off sign"
+              style={{ maxWidth: matchesXs ? "20rem" : "28rem" }}
+            />
           </Grid>
         </Grid>
-        <Grid item container direction="column" alignItems='center' md>
+        <Grid item container direction="column" alignItems="center" md>
           <Grid item>
-            <Typography align='center' variant="h4" gutterBottom>
+            <Typography align="center" variant="h4" gutterBottom>
               Increase Engagement
             </Typography>
           </Grid>
@@ -201,6 +254,9 @@ const MobileApps = ({ setValue, setSelectedIndex }) => {
             <img src={engagment} alt="app with notification" />
           </Grid>
         </Grid>
+      </Grid>
+      <Grid item>
+        <CallToAction setValue={setValue} />
       </Grid>
     </Grid>
   );
