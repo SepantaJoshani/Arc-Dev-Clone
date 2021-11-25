@@ -3,6 +3,7 @@ import { makeStyles, useTheme } from "@material-ui/styles";
 import { Typography, useMediaQuery } from "@material-ui/core";
 import Lottie from "react-lottie";
 import React from "react";
+import consultation from "../assets/consultationIcon.svg";
 
 import technologyAnimation from "../animations/technologyAnimation/data.json";
 import vision from "../assets/vision.svg";
@@ -155,8 +156,80 @@ const Revolution = ({ setValue, setSelectedIndex }) => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid item container justifyContent='flex-end' lg>
-          <Lottie options={defaultOptions} style={{maxWidth:'40rem',margin:0}} />
+        <Grid item container justifyContent="flex-end" lg>
+          <Lottie
+            options={defaultOptions}
+            style={{ maxWidth: "40rem", margin: 0 }}
+          />
+        </Grid>
+      </Grid>
+      {/*--------Process Block (Third)--------*/}
+
+      <Grid
+        item
+        container
+        justifyContent="center"
+        className={classes.rowContainer}
+      >
+        <Grid item>
+          <Typography variant="h4" gutterBottom>
+            Process
+          </Typography>
+        </Grid>
+      </Grid>
+      {/*--------Process Block , The Background Part--------*/}
+      <Grid
+        item
+        container
+        direcion="row"
+        style={{ backgroundColor: "#B3B3B3", height: "90rem" }}
+        className={classes.rowContainer}
+      >
+        <Grid item container direction="column" lg>
+          <Grid item>
+            <Typography
+              variant="h4"
+              gutterBottom
+              style={{ color: "#000", margintop: "5rem" }}
+            >
+              Consultation
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography
+              variant="body1"
+              style={{ color: "#fff", maxWidth: "20rem" }}
+              paragraph
+            >
+              Our process begins the moment you realize you need a piece of
+              technology for your business. Whether you already have an idea for
+              where to start and what to do, or if you just know you want to
+              step things up, our initial consultation will help you examine
+              your business holistically to find the best solutions.
+            </Typography>
+            <Typography
+              variant="body1"
+              style={{ color: "#fff", maxWidth: "20rem" }}
+              paragraph
+            >
+              Detailed notes will be taken on your requirements and constraints,
+              while taking care to identify other potential areas for
+              consideration.
+            </Typography>
+            <Typography
+              variant="body1"
+              style={{ color: "#fff", maxWidth: "20rem" }}
+              paragraph
+            >
+              Cutting-edge advancements in machine learning like object
+              detection and natural language processing allow computers to do
+              things previously unimaginable, and our expertise and intuition
+              will help usher you into this new future of possibilities.
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid item container alignContent='center' lg>
+          <img src={consultation} alt="handshake" />
         </Grid>
       </Grid>
     </Grid>
