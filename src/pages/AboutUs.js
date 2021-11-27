@@ -1,6 +1,7 @@
 import { makeStyles, useTheme } from "@material-ui/styles";
 import React from "react";
 import { Grid, Typography } from "@material-ui/core";
+import history from "../assets/history.svg";
 
 const useStyles = makeStyles((theme) => ({
   missionStatement: {
@@ -26,7 +27,7 @@ const AboutUs = () => {
 
   return (
     <Grid container direction="column">
-         {/*--------About Us Block (first)--------*/}
+      {/*--------About Us Block (first)--------*/}
       <Grid item className={classes.rowContainer} style={{ marginTop: "2rem" }}>
         <Typography variant="h2">About Us</Typography>
       </Grid>
@@ -44,21 +45,65 @@ const AboutUs = () => {
           to the Midwest and beyond.
         </Typography>
       </Grid>
-       {/*--------History Block (second)--------*/}
-       <Grid item container className={classes.rowContainer}>
-           <Grid item container direction='column'>
-               <Grid item>
-                   <Typography variant='h2' gutterBottom>
-                       History
-                   </Typography>
-               </Grid>
-               <Grid item>
-                   <Typography variant='body1' style={{fontWeight:'700',fontStyle:'italic'}}>
-                   We're the new kid on the block
-                   </Typography>
-               </Grid>
-           </Grid>
-       </Grid>
+      {/*--------History Block (second)--------*/}
+      <Grid
+        item
+        container
+        justifyContent="space-around"
+        className={classes.rowContainer}
+      >
+        <Grid item>
+          <Grid
+            item
+            container
+            direction="column"
+            style={{ maxWidth: "35rem" }}
+            lg
+          >
+            <Grid item>
+              <Typography variant="h2" gutterBottom>
+                History
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography
+                variant="body1"
+                style={{ fontWeight: "700", fontStyle: "italic" }}
+              >
+                We're the new kid on the block
+              </Typography>
+              <Typography variant="body1" paragraph>
+                Founded in 2019, we’re ready to get our hands on the world’s
+                business problems.
+              </Typography>
+              <Typography variant="body1" paragraph>
+                It all started with one question: Why aren’t all businesses
+                using available technology? There are many different answers to
+                that question: economic barriers, social barriers, educational
+                barriers, and sometimes institutional barriers.
+              </Typography>
+              <Typography variant="body1" paragraph>
+                We aim to be a powerful force in overcoming these obstacles.
+                Recent developments in software engineering and computing power,
+                compounded by the proliferation of smart phones, has opened up
+                infinite worlds of possibility. Things that have always been
+                done by hand can now be done digitally and automatically, and
+                completely new methods of interaction are created daily. Taking
+                full advantage of these advancements is the name of the game.
+              </Typography>
+              <Typography variant="body1" paragraph>
+                All this change can be a lot to keep up with, and that’s where
+                we come in.
+              </Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Grid item container justifyContent="center" lg>
+            <img src={history} style={{ maxHeight: "22rem" }} alt="quill pen" />
+          </Grid>
+        </Grid>
+      </Grid>
     </Grid>
   );
 };
