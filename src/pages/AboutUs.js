@@ -1,7 +1,11 @@
 import { makeStyles, useTheme } from "@material-ui/styles";
 import React from "react";
-import { Grid, Typography } from "@material-ui/core";
+import { Avatar, Grid, Typography } from "@material-ui/core";
 import history from "../assets/history.svg";
+import Sepanta from "../assets/Sepanta.png";
+import yearbook from "../assets/yearbook.svg";
+import puppy from "../assets/puppy.svg";
+import { LoremIpsum } from "react-lorem-ipsum";
 
 const useStyles = makeStyles((theme) => ({
   missionStatement: {
@@ -18,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: "1.5rem",
       paddingRight: "1.5rem",
     },
+  },
+  avatar: {
+    height: "22em",
+    width: "22em",
   },
 }));
 
@@ -101,6 +109,61 @@ const AboutUs = () => {
         <Grid item>
           <Grid item container justifyContent="center" lg>
             <img src={history} style={{ maxHeight: "22rem" }} alt="quill pen" />
+          </Grid>
+        </Grid>
+      </Grid>
+      {/*--------Team Block (Third)--------*/}
+      <Grid
+        item
+        container
+        direction="column"
+        alignItems="center"
+        className={classes.rowContainer}
+      >
+        <Grid item>
+          <Typography align="center" variant="h4" gutterBottom>
+            Team
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography variant="body1" paragraph align="center">
+            Sepanta Joshany
+          </Typography>
+          <Typography variant="body1" paragraph align="center">
+            I just cloned this site as a training
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Avatar alt="founder" src={Sepanta} className={classes.avatar} />
+        </Grid>
+        <Grid item container>
+          <Grid item container direction="column" lg>
+            <Grid item>
+              <img src={yearbook} alt="yearbook" />
+            </Grid>
+            <Grid item>
+              <Typography variant="caption">
+                a page from Zach yearbook
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid item lg style={{ maxWidth: "45rem", padding: "1.25rem" }}>
+            <Typography variant="body1" align="center" paragraph>
+              <LoremIpsum p={1} random={false} avgWordsPerSentence={5} />
+            </Typography>
+            <Typography variant="body1" align="center" paragraph>
+              <LoremIpsum p={1} random={false} avgWordsPerSentence={5} />
+            </Typography>
+          </Grid>
+          <Grid item container direction="column" lg alignItems="flex-end">
+            <Grid item>
+              <img src={puppy} alt="puppy" />
+            </Grid>
+            <Grid item>
+              <Typography variant="caption">
+                Zach 's miniature dapple dachshund, Sterling
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
