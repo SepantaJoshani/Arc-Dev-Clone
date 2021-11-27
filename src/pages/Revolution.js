@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 const Revolution = ({ setValue, setSelectedIndex }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -452,7 +451,7 @@ const Revolution = ({ setValue, setSelectedIndex }) => {
           </Grid>
         </Grid>
         <Grid item style={{ alignSelf: "center" }} lg>
-          <img src={review} alt="maginfying glass" width='100%' />
+          <img src={review} alt="maginfying glass" style={{width:'100%',maxWidth:700}} />
         </Grid>
       </Grid>
       {/*--------Design Block (6th)-------*/}
@@ -557,7 +556,7 @@ const Revolution = ({ setValue, setSelectedIndex }) => {
           </Grid>
         </Grid>
         <Grid item style={{ alignSelf: "center" }} lg>
-          <img src={review} width='100%' alt="magnifying glass" />
+          <img src={review} style={{width:'100%',maxWidth:700}} alt="magnifying glass" />
         </Grid>
       </Grid>
       {/*--------Orange Build Block (8th)-------*/}
