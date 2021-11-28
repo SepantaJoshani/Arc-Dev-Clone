@@ -103,7 +103,7 @@ const ContactUs = ({ setValue }) => {
 
         break;
       case "phone":
-        setEmail(event.target.value);
+        setPhone(event.target.value);
         isValid = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(
           event.target.value
         );
@@ -168,7 +168,13 @@ const ContactUs = ({ setValue }) => {
                   variant="body1"
                   style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
                 >
-                  (98) 935-590-8760
+                  <a
+                    href="tel:+989355908760"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    {" "}
+                    (98) 935-590-8760
+                  </a>
                 </Typography>
               </Grid>
             </Grid>
@@ -185,7 +191,12 @@ const ContactUs = ({ setValue }) => {
                   variant="body1"
                   style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
                 >
-                  Sepanta_97@gmail.com
+                  <a
+                    href="mailto:sepanta_97@Yahoo.com"
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    Sepanta_97@gmail.com
+                  </a>
                 </Typography>
               </Grid>
             </Grid>
@@ -245,7 +256,18 @@ const ContactUs = ({ setValue }) => {
               justifyContent="center"
               style={{ marginTop: "2rem" }}
             >
-              <Button variant="contained" className={classes.sendButton}>
+              <Button
+                disabled={
+                  name.length === 0 ||
+                  message.length === 0 ||
+                  email.length === 0 ||
+                  phone.length === 0 ||
+                  phoneHelper.length !== 0 ||
+                  emailHelper.length !== 0
+                }
+                variant="contained"
+                className={classes.sendButton}
+              >
                 Send Message
                 <img
                   style={{ marginLeft: "1rem" }}
