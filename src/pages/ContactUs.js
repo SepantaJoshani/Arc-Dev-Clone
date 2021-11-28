@@ -78,9 +78,48 @@ const ContactUs = ({ setValue }) => {
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [name, setName] = useState("");
+
   const [email, setEmail] = useState("");
+  const [emailHelper, setEmailHelper] = useState("");
   const [phone, setPhone] = useState("");
+  const [phoneHelper, setPhoneHelper] = useState("");
   const [message, setMessage] = useState("");
+
+  const onChange = (event) => {
+    let isValid;
+
+    switch (event.target.id) {
+      case "email":
+        setEmail(event.target.value);
+        isValid = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
+          event.target.value
+        );
+
+        if (!isValid) {
+          setEmailHelper("Invalid email");
+        } else {
+          setEmailHelper("");
+        }
+
+        break;
+      case "phone":
+        setEmail(event.target.value);
+        isValid = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(
+          event.target.value
+        );
+
+        if (!isValid) {
+          setPhoneHelper("Invalid number");
+        } else {
+          setPhoneHelper("");
+        }
+
+        break;
+
+      default:
+        break;
+    }
+  };
 
   return (
     <Grid container direciton="row">
@@ -95,18 +134,22 @@ const ContactUs = ({ setValue }) => {
         xl={3}
         style={{
           marginBottom: matchesMD ? "5rem" : 0,
-          marginTop:matchesSM?'1rem': matchesMD ? "5rem" : 0,
+          marginTop: matchesSM ? "1rem" : matchesMD ? "5rem" : 0,
         }}
       >
         <Grid item>
           <Grid item container direction="column">
             <Grid item>
-              <Typography align={matchesMD?'center':'left'} variant="h2" style={{ lineHeight: 1 }}>
+              <Typography
+                align={matchesMD ? "center" : "left"}
+                variant="h2"
+                style={{ lineHeight: 1 }}
+              >
                 Contact Us
               </Typography>
               <Typography
                 style={{ color: theme.palette.common.blue }}
-                align={matchesMD?'center':'left'}
+                align={matchesMD ? "center" : "left"}
                 variant="body1"
               >
                 We're waiting.
@@ -152,7 +195,7 @@ const ContactUs = ({ setValue }) => {
               direction="column"
               style={{ maxWidth: "20rem" }}
             >
-              <Grid item style={{marginBottom:'0.5rem'}}>
+              <Grid item style={{ marginBottom: "0.5rem" }}>
                 <TextField
                   fullWidth
                   label="Name"
@@ -161,22 +204,26 @@ const ContactUs = ({ setValue }) => {
                   onChange={(event) => setName(event.target.value)}
                 />
               </Grid>
-              <Grid item style={{marginBottom:'0.5rem'}}>
+              <Grid item style={{ marginBottom: "0.5rem" }}>
                 <TextField
+                  error={emailHelper.length !== 0}
+                  helperText={emailHelper}
                   fullWidth
                   label="Email"
                   id="email"
                   value={email}
-                  onChange={(event) => setEmail(event.target.value)}
+                  onChange={onChange}
                 />
               </Grid>
-              <Grid item style={{marginBottom:'0.5rem'}}>
+              <Grid item style={{ marginBottom: "0.5rem" }}>
                 <TextField
+                  error={phoneHelper.length !== 0}
+                  helperText={phoneHelper}
                   fullWidth
                   label="Phone"
                   id="phone"
                   value={phone}
-                  onChange={(event) => setPhone(event.target.value)}
+                  onChange={onChange}
                 />
               </Grid>
             </Grid>
