@@ -85,6 +85,10 @@ export const theme = createTheme({
       },
     },
     MuiInput: {
+      root: {
+        color: arcGrey,
+        fontWeight: 300,
+      },
       underline: {
         "&:before": {
           borderBottom: `2px solid ${arcBlue}`,
@@ -92,10 +96,7 @@ export const theme = createTheme({
         "&:hover:not($disabled):not($focused):not($error):before": {
           borderBottom: `2px solid ${arcBlue}`,
         },
-       
-        
       },
-      
     },
   },
 });

@@ -9,11 +9,11 @@ import {
   useMediaQuery,
 } from "@material-ui/core";
 import background from "../assets/background.jpg";
+import mobileBackground from "../assets/mobileBackground.jpg";
 import phoneIcon from "../assets/phone.svg";
 import emailIcon from "../assets/email.svg";
 import airplane from "../assets/send.svg";
 import ButtonArrow from "../components/ui/ButtonArrow";
-import { orange } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -22,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     height: "60em",
+    paddingBottom: "10rem",
+    [theme.breakpoints.down("md")]: {
+      backgroundImage: `url(${mobileBackground})`,
+    },
   },
   estimateBtn: {
     ...theme.typography.estimate,
@@ -34,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       background: theme.palette.secondary.light,
     },
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       marginLeft: 0,
       marginRight: 0,
     },
@@ -44,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "0.7rem",
     height: 35,
     padding: 5,
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       marginBottom: "2rem",
     },
   },
@@ -69,6 +73,8 @@ const useStyles = makeStyles((theme) => ({
 const ContactUs = ({ setValue }) => {
   const classes = useStyles();
   const theme = useTheme();
+
+  const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [name, setName] = useState("");
@@ -79,94 +85,129 @@ const ContactUs = ({ setValue }) => {
   return (
     <Grid container direciton="row">
       {/*--------Form Block (Left)--------*/}
-      <Grid item container direction="column"  justifyContent="center" lg={3}>
+      <Grid
+        item
+        container
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        lg={4}
+        xl={3}
+        style={{
+          marginBottom: matchesMD ? "5rem" : 0,
+          marginTop:matchesSM?'1rem': matchesMD ? "5rem" : 0,
+        }}
+      >
         <Grid item>
-          <Typography variant="h2" style={{ lineHeight: 1 }}>
-            Contact Us
-          </Typography>
-          <Typography
-            style={{ color: theme.palette.common.blue }}
-            variant="body1"
-          >
-            We're waiting.
-          </Typography>
-        </Grid>
-        <Grid item container>
-          <Grid item>
-            <img
-              src={phoneIcon}
-              alt="phone"
-              style={{ marginRight: "0.5rem" }}
-            />
-          </Grid>
-          <Grid item>
-            <Typography
-              variant="body1"
-              style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
+          <Grid item container direction="column">
+            <Grid item>
+              <Typography align={matchesMD?'center':'left'} variant="h2" style={{ lineHeight: 1 }}>
+                Contact Us
+              </Typography>
+              <Typography
+                style={{ color: theme.palette.common.blue }}
+                align={matchesMD?'center':'left'}
+                variant="body1"
+              >
+                We're waiting.
+              </Typography>
+            </Grid>
+            <Grid item container style={{ marginTop: "2rem" }}>
+              <Grid item>
+                <img
+                  src={phoneIcon}
+                  alt="phone"
+                  style={{ marginRight: "0.5rem" }}
+                />
+              </Grid>
+              <Grid item>
+                <Typography
+                  variant="body1"
+                  style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
+                >
+                  (98) 935-590-8760
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item container style={{ marginBottom: "2rem" }}>
+              <Grid item>
+                <img
+                  src={emailIcon}
+                  alt="envelop"
+                  style={{ marginRight: "0.5rem", verticalAlign: "bottom" }}
+                />
+              </Grid>
+              <Grid item>
+                <Typography
+                  variant="body1"
+                  style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
+                >
+                  Sepanta_97@gmail.com
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              container
+              direction="column"
+              style={{ maxWidth: "20rem" }}
             >
-              (98) 935-590-8760
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid item container>
-          <Grid item>
-            <img
-              src={emailIcon}
-              alt="envelop"
-              style={{ marginRight: "0.5rem", verticalAlign: "bottom" }}
-            />
-          </Grid>
-          <Grid item>
-            <Typography
-              variant="body1"
-              style={{ color: theme.palette.common.blue, fontSize: "1rem" }}
+              <Grid item style={{marginBottom:'0.5rem'}}>
+                <TextField
+                  fullWidth
+                  label="Name"
+                  id="name"
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                />
+              </Grid>
+              <Grid item style={{marginBottom:'0.5rem'}}>
+                <TextField
+                  fullWidth
+                  label="Email"
+                  id="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+              </Grid>
+              <Grid item style={{marginBottom:'0.5rem'}}>
+                <TextField
+                  fullWidth
+                  label="Phone"
+                  id="phone"
+                  value={phone}
+                  onChange={(event) => setPhone(event.target.value)}
+                />
+              </Grid>
+            </Grid>
+            <Grid item style={{ maxWidth: "20rem" }}>
+              <TextField
+                fullWidth
+                InputProps={{ disableUnderline: true }}
+                value={message}
+                className={classes.message}
+                id="message"
+                onChange={(event) => setMessage(event.target.value)}
+                multiline
+                minRows={10}
+              />
+            </Grid>
+            <Grid
+              item
+              container
+              justifyContent="center"
+              style={{ marginTop: "2rem" }}
             >
-              Sepanta_97@gmail.com
-            </Typography>
+              <Button variant="contained" className={classes.sendButton}>
+                Send Message
+                <img
+                  style={{ marginLeft: "1rem" }}
+                  src={airplane}
+                  alt="airplane"
+                />
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid item container style={{maxWidth:'20rem'}}>
-          <Grid item>
-            <TextField
-              label="Name"
-              id="name"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label="Email"
-              id="email"
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-            />
-          </Grid>
-          <Grid item>
-            <TextField
-              label="Phone"
-              id="phone"
-              value={phone}
-              onChange={(event) => setPhone(event.target.value)}
-            />
-          </Grid>
-        </Grid>
-        <Grid item style={{maxWidth:'20rem'}}>
-          <TextField
-            InputProps={{ disableUnderline: true }}
-            value={message}
-            className={classes.message}
-            id="message"
-            onChange={(event) => setMessage(event.target.value)}
-            multiline
-            minRows={10}
-          />
-        </Grid>
-        <Grid item>
-          <Button variant="contained" className={classes.sendButton}>
-            Send Message
-            <img style={{ marginLeft: "1rem" }} src={airplane} alt="airplane" />
-          </Button>
         </Grid>
       </Grid>
       {/*--------Call 2 Action Block (Right)--------*/}
@@ -175,27 +216,34 @@ const ContactUs = ({ setValue }) => {
         container
         alignItems="center"
         className={classes.background}
-        lg={9}
+        direction={matchesMD ? "column" : "row"}
+        lg={8}
+        xl={9}
+        justifyContent={matchesMD ? "center" : "flex-start"}
       >
         <Grid
           item
           style={{
-            marginLeft: matchesSM ? 0 : "5rem",
-            textAlign: matchesSM ? "center" : "inherit",
+            marginLeft: matchesMD ? 0 : "3rem",
+            textAlign: matchesMD ? "center" : "inherit",
           }}
         >
           <Grid container direction="column">
             <Grid item>
-              <Typography variant="h2">
+              <Typography align={matchesMD ? "center" : "left"} variant="h2">
                 Simple Software.
                 <br /> Revolutionary Results
               </Typography>
-              <Typography variant="subtitle2" style={{ fontSize: "1.5rem" }}>
+              <Typography
+                variant="subtitle2"
+                align={matchesMD ? "center" : "left"}
+                style={{ fontSize: "1.5rem" }}
+              >
                 Take advantage of the 21st Century
               </Typography>
               <Grid
                 container
-                justifyContent={matchesSM ? "center" : "flex-start"}
+                justifyContent={matchesMD ? "center" : "flex-start"}
                 item
               >
                 <Button
