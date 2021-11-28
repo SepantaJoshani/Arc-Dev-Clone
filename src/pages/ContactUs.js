@@ -13,6 +13,7 @@ import phoneIcon from "../assets/phone.svg";
 import emailIcon from "../assets/email.svg";
 import airplane from "../assets/send.svg";
 import ButtonArrow from "../components/ui/ButtonArrow";
+import { orange } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -47,6 +48,22 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: "2rem",
     },
   },
+  message: {
+    border: `2px solid ${theme.palette.common.blue}`,
+    marginTop: "5rem",
+    borderRadius: 5,
+  },
+  sendButton: {
+    ...theme.typography.estimate,
+    borderRadius: 50,
+    height: 45,
+    width: 245,
+    fontSize: "1rem",
+    backgroundColor: theme.palette.common.orange,
+    "&:hover": {
+      background: theme.palette.secondary.light,
+    },
+  },
 }));
 
 const ContactUs = ({ setValue }) => {
@@ -62,7 +79,7 @@ const ContactUs = ({ setValue }) => {
   return (
     <Grid container direciton="row">
       {/*--------Form Block (Left)--------*/}
-      <Grid item container direction="column" justifyContent="center" lg={3}>
+      <Grid item container direction="column"  justifyContent="center" lg={3}>
         <Grid item>
           <Typography variant="h2" style={{ lineHeight: 1 }}>
             Contact Us
@@ -108,7 +125,7 @@ const ContactUs = ({ setValue }) => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid item container>
+        <Grid item container style={{maxWidth:'20rem'}}>
           <Grid item>
             <TextField
               label="Name"
@@ -134,9 +151,11 @@ const ContactUs = ({ setValue }) => {
             />
           </Grid>
         </Grid>
-        <Grid item>
+        <Grid item style={{maxWidth:'20rem'}}>
           <TextField
+            InputProps={{ disableUnderline: true }}
             value={message}
+            className={classes.message}
             id="message"
             onChange={(event) => setMessage(event.target.value)}
             multiline
@@ -144,13 +163,20 @@ const ContactUs = ({ setValue }) => {
           />
         </Grid>
         <Grid item>
-          <Button variant="contained">
-            Send Message <img src={airplane} alt="airplane" />
+          <Button variant="contained" className={classes.sendButton}>
+            Send Message
+            <img style={{ marginLeft: "1rem" }} src={airplane} alt="airplane" />
           </Button>
         </Grid>
       </Grid>
       {/*--------Call 2 Action Block (Right)--------*/}
-      <Grid item container alignItems='center' className={classes.background} lg={9}>
+      <Grid
+        item
+        container
+        alignItems="center"
+        className={classes.background}
+        lg={9}
+      >
         <Grid
           item
           style={{
