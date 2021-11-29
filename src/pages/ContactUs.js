@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import axios from "axios";
 import { makeStyles, useTheme } from "@material-ui/styles";
+import MuiAlert from "@material-ui/lab/Alert";
 import { Link } from "react-router-dom";
 import {
   Grid,
@@ -11,6 +12,7 @@ import {
   Dialog,
   DialogContent,
   CircularProgress,
+  Snackbar,
 } from "@material-ui/core";
 import background from "../assets/background.jpg";
 import mobileBackground from "../assets/mobileBackground.jpg";
@@ -18,6 +20,10 @@ import phoneIcon from "../assets/phone.svg";
 import emailIcon from "../assets/email.svg";
 import airplane from "../assets/send.svg";
 import ButtonArrow from "../components/ui/ButtonArrow";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   background: {
@@ -90,6 +96,12 @@ const ContactUs = ({ setValue }) => {
   const [phoneHelper, setPhoneHelper] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+    severity: "",
+  });
 
   const [open, setOpen] = useState(false);
 
@@ -133,10 +145,10 @@ const ContactUs = ({ setValue }) => {
     setLoading(true);
     axios
       .post("https://jsonplaceholder.typicode.com/posts", {
-         name,
+        name,
         email,
-       phone,
-       message,
+        phone,
+        message,
       })
       .then((res) => {
         setLoading(false);
@@ -145,9 +157,23 @@ const ContactUs = ({ setValue }) => {
         setMessage("");
         setPhone("");
         setName("");
+        setAlert({
+          open: true,
+          message: "Message Sent Successfully",
+          backgroundColor: "#4BB543",
+          severity: "success",
+        });
         console.log(res.data);
       })
-      .catch((err) => setLoading(false));
+      .catch((err) => {
+        setLoading(false);
+        setAlert({
+          open: true,
+          message: "Sending Message Failed",
+          backgroundColor: "#FF3232",
+          severity: "error",
+        });
+      });
   };
 
   const buttonContent = (
@@ -311,7 +337,7 @@ const ContactUs = ({ setValue }) => {
           </Grid>
         </Grid>
       </Grid>
-      {/*--------Dialog --------*/}
+      {/*--------Dialog (optional place) --------*/}
       <Dialog
         style={{ zIndex: 1302 }}
         open={open}
@@ -422,6 +448,26 @@ const ContactUs = ({ setValue }) => {
           </Grid>
         </DialogContent>
       </Dialog>
+      {/*--------Snackbar part (optional place)--------*/}
+      <Snackbar
+        open={alert.open}
+        message={alert.message}
+        ContentProps={{
+          style: {
+            background: alert.backgroundColor,
+          },
+        }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={() => setAlert({ ...alert, open: false })}
+        autoHideDuration={3000}
+      >
+        <Alert
+          onClose={() => setAlert({ ...alert, open: false })}
+          severity={alert.severity}
+        >
+          This is a success message!
+        </Alert>
+      </Snackbar>
 
       {/*--------Call 2 Action Block (Right)--------*/}
       <Grid
