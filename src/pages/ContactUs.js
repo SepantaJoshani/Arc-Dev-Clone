@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
+import axios from "axios";
 import { makeStyles, useTheme } from "@material-ui/styles";
 import { Link } from "react-router-dom";
 import {
@@ -9,6 +10,7 @@ import {
   useMediaQuery,
   Dialog,
   DialogContent,
+  CircularProgress,
 } from "@material-ui/core";
 import background from "../assets/background.jpg";
 import mobileBackground from "../assets/mobileBackground.jpg";
@@ -87,6 +89,7 @@ const ContactUs = ({ setValue }) => {
   const [phone, setPhone] = useState("");
   const [phoneHelper, setPhoneHelper] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [open, setOpen] = useState(false);
 
@@ -125,6 +128,34 @@ const ContactUs = ({ setValue }) => {
         break;
     }
   };
+
+  const onConfirm = () => {
+    setLoading(true);
+    axios
+      .post("https://jsonplaceholder.typicode.com/posts", {
+         name,
+        email,
+       phone,
+       message,
+      })
+      .then((res) => {
+        setLoading(false);
+        setOpen(false);
+        setEmail("");
+        setMessage("");
+        setPhone("");
+        setName("");
+        console.log(res.data);
+      })
+      .catch((err) => setLoading(false));
+  };
+
+  const buttonContent = (
+    <Fragment>
+      Send Message
+      <img style={{ marginLeft: "1em" }} src={airplane} alt="airplane" />
+    </Fragment>
+  );
 
   return (
     <Grid container direciton="row">
@@ -262,24 +293,19 @@ const ContactUs = ({ setValue }) => {
               style={{ marginTop: "2em" }}
             >
               <Button
-                // disabled={
-                //   name.length === 0 ||
-                //   message.length === 0 ||
-                //   email.length === 0 ||
-                //   phone.length === 0 ||
-                //   phoneHelper.length !== 0 ||
-                //   emailHelper.length !== 0
-                // }
+                disabled={
+                  name.length === 0 ||
+                  message.length === 0 ||
+                  email.length === 0 ||
+                  phone.length === 0 ||
+                  phoneHelper.length !== 0 ||
+                  emailHelper.length !== 0
+                }
                 variant="contained"
                 className={classes.sendButton}
                 onClick={() => setOpen(true)}
               >
-                Send Message
-                <img
-                  style={{ marginLeft: "1em" }}
-                  src={airplane}
-                  alt="airplane"
-                />
+                {buttonContent}
               </Button>
             </Grid>
           </Grid>
@@ -342,7 +368,7 @@ const ContactUs = ({ setValue }) => {
                   />
                 </Grid>
 
-                <Grid item style={{ minWidth:matchesXS?'20em': "30em" }}>
+                <Grid item style={{ minWidth: matchesXS ? "20em" : "30em" }}>
                   <TextField
                     fullWidth
                     InputProps={{ disableUnderline: true }}
@@ -363,7 +389,7 @@ const ContactUs = ({ setValue }) => {
                 alignItems="center"
                 direction={matchesSM ? "column" : "row"}
                 style={{ marginTop: "2em" }}
-                justifyContent='center'
+                justifyContent="center"
               >
                 <Grid item>
                   <Button
@@ -386,14 +412,9 @@ const ContactUs = ({ setValue }) => {
                     }
                     variant="contained"
                     className={classes.sendButton}
-                    onClick={() => setOpen(true)}
+                    onClick={onConfirm}
                   >
-                    Send Message
-                    <img
-                      style={{ marginLeft: "1em" }}
-                      src={airplane}
-                      alt="airplane"
-                    />
+                    {loading ? <CircularProgress size={30} /> : buttonContent}
                   </Button>
                 </Grid>
               </Grid>
