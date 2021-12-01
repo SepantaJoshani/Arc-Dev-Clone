@@ -1,7 +1,7 @@
 import Header from "./components/ui/Header";
 import { ThemeProvider } from "@material-ui/styles";
 import { theme } from "./components/ui/Theme";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch,Redirect } from "react-router-dom";
 import Footer from "./components/ui/Footer";
 import { useState } from "react";
 import LandingPage from "./pages/LandingPage";
@@ -12,6 +12,7 @@ import Websites from "./pages/Websites";
 import Revolution from "./pages/Revolution";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
+import Estimate from "./pages/Estimate";
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -107,7 +108,17 @@ function App() {
               />
             )}
           />
-          <Route exact path="/estimate" component={() => <div>Estimate</div>} />
+          <Route
+            exact
+            path="/estimate"
+            component={() => (
+              <Estimate
+                setValue={setValue}
+                setSelectedIndex={setSelectedIndex}
+              />
+            )}
+          />
+          <Redirect from='*' to="/" />
         </Switch>
         <Footer setValue={setValue} setSelectedIndex={setSelectedIndex} />
       </BrowserRouter>
