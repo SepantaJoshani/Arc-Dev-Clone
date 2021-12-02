@@ -1,6 +1,6 @@
 import { Button, Grid, Typography, useMediaQuery } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/styles";
-import React from "react";
+import React, { Fragment } from "react";
 import Lottie from "react-lottie";
 
 import check from "../assets/check.svg";
@@ -49,6 +49,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const defaultQuestions = [
+  {
+    id: 1,
+    title: "Which service are interested in?",
+    active: true,
+    options: [
+      {
+        id: 1,
+        title: "Custom Software Development",
+        subtitle: null,
+        icon: software,
+        iconAlt: "three floating strings",
+        selected: false,
+        cost: 0,
+      },
+      {
+        id: 2,
+        title: "iOS/Android App Software Development",
+        subtitle: null,
+        icon: mobile,
+        iconAlt: "mobile",
+        selected: false,
+        cost: 0,
+      },
+      {
+        id: 3,
+        title: "Website Software Development",
+        subtitle: null,
+        icon: website,
+        iconAlt: "computer",
+        selected: false,
+        cost: 0,
+      },
+    ],
+  },
+];
+
 const Estimate = () => {
   const classes = useStyles();
   const theme = useTheme();
@@ -90,70 +127,62 @@ const Estimate = () => {
         lg
         style={{ marginRight: "2em", marginBottom: "25em" }}
       >
-        <Grid item>
-          <Typography
-            variant="h2"
-            align="center"
-            style={{
-              fontWeight: 500,
-              marginBottom: "2.5em",
-              marginTop: "5em",
-              fontSize: "2.25em",
-            }}
-            gutterBottom
-          >
-            Which service are you interested in?
-          </Typography>
-        </Grid>
-        {/*--------Second Block (The Icons Block)--------*/}
-        <Grid item container>
-          <Grid item container direction="column" md>
-            <Grid item style={{ maxWidth: "12em" }}>
-              <Typography
-                variant="h6"
-                align="center"
-                style={{ marginBottom: "1em" }}
-              >
-                Custom Software Development
-              </Typography>
-            </Grid>
-            <Grid item>
-              <img
-                src={software}
-                alt="three floating strings"
-                className={classes.icon}
-              />
-            </Grid>
-          </Grid>
-          <Grid item container direction="column" md>
-            <Grid item style={{ maxWidth: "12em" }}>
-              <Typography
-                variant="h6"
-                align="center"
-                style={{ marginBottom: "1em" }}
-              >
-                iOS/Android App Development
-              </Typography>
-            </Grid>
-            <Grid item>
-              <img src={mobile} alt="mobile icon" className={classes.icon} />
-            </Grid>
-          </Grid>
-          <Grid item container direction="column" md>
-            <Grid item style={{ maxWidth: "12em" }}>
-              <Typography
-                variant="h6"
-                align="center"
-                style={{ marginBottom: "1em" }}
-              >
-                Website Development
-              </Typography>
-            </Grid>
-            <Grid item>
-              <img src={website} alt="computer" className={classes.icon} />
-            </Grid>
-          </Grid>
-        </Grid>
+        {defaultQuestions
+          .filter((question) => question.active)
+          .map((question, index) => (
+            <Fragment key={question.id}>
+              <Grid item>
+                <Typography
+                  variant="h2"
+                  align="center"
+                  style={{
+                    fontWeight: 500,
+                    marginTop: "5em",
+                    fontSize: "2.25em",
+                  }}
+                >
+                  {question.title}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  align="center"
+                  style={{ marginBottom: "2.5em" }}
+                  gutterBottom
+                >
+                  {question.subtitle}
+                </Typography>
+              </Grid>
+
+              {/*--------Second Block (The Icons Block)--------*/}
+
+              <Grid item container>
+                {question.options.map((option) => (
+                  <Grid item container direction="column" md>
+                    <Grid item style={{ maxWidth: "12em" }}>
+                      <Typography
+                        variant="h6"
+                        align="center"
+                        style={{ marginBottom: "1em" }}
+                      >
+                        {option.title}
+                      </Typography>
+                      <Typography variant="caption" align="center">
+                        {option.subtitle}
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <img
+                        src={option.icon}
+                        alt={option.iconAlt}
+                        className={classes.icon}
+                      />
+                    </Grid>
+                  </Grid>
+                ))}
+              </Grid>
+            </Fragment>
+          ))}
+
         {/*--------Second Block (The Arrows Block)--------*/}
         <Grid
           item
