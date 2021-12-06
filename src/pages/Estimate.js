@@ -43,6 +43,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "5em",
     borderRadius: 5,
   },
+  specialText: {
+    fontFamily: "Raleway",
+    fontWeight: 700,
+    fontSize: "1.5rem",
+    color: theme.palette.common.orange,
+  },
 }));
 
 const Estimate = () => {
@@ -203,11 +209,14 @@ const Estimate = () => {
 
     selections.map((options) => options.map((option) => (cost += option.cost)));
 
-    const userCost =questions.filter(question=>question.title==="How many users do you expect?").map(question=>question.options.filter(option=>option.selected))[0][0].cost
-    
-   cost -=userCost
-   cost *=userCost
-   console.log(cost);
+    const userCost = questions
+      .filter((question) => question.title === "How many users do you expect?")
+      .map((question) =>
+        question.options.filter((option) => option.selected)
+      )[0][0].cost;
+
+    cost -= userCost;
+    cost *= userCost;
 
     setTotal(cost);
   };
@@ -415,7 +424,8 @@ const Estimate = () => {
               </Grid>
               <Grid item>
                 <Typography variant="body1" paragraph>
-                  We can create this digital solution for an estimated
+                  We can create this digital solution for an estimated{" "}
+                  <span className={classes.specialText}>{total.toFixed(2)}</span>
                 </Typography>
                 <Typography variant="body1" paragraph>
                   Fill out your name, number, and email, place your request, and
@@ -427,6 +437,7 @@ const Estimate = () => {
           </Grid>
         </DialogContent>
       </Dialog>
+      {/* *************** */}
     </Grid>
   );
 };
