@@ -45,8 +45,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 const Estimate = () => {
   const classes = useStyles();
   const theme = useTheme();
@@ -55,12 +53,12 @@ const Estimate = () => {
   const [questions, setQuestions] = useState(defaultQuestions);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [name, setName] = useState("");
-
   const [email, setEmail] = useState("");
   const [emailHelper, setEmailHelper] = useState("");
   const [phone, setPhone] = useState("");
   const [phoneHelper, setPhoneHelper] = useState("");
   const [message, setMessage] = useState("");
+  const [total, setTotal] = useState(0);
 
   const defaultOptions = {
     loop: true,
@@ -196,6 +194,24 @@ const Estimate = () => {
     }
   };
 
+  const getTotal = () => {
+    let cost = 0;
+
+    const selections = questions
+      .map((question) => question.options.filter((option) => option.selected))
+      .filter((option) => option.length > 0);
+
+    selections.map((options) => options.map((option) => (cost += option.cost)));
+
+    const userCost =questions.filter(question=>question.title==="How many users do you expect?").map(question=>question.options.filter(option=>option.selected))[0][0].cost
+    
+   cost -=userCost
+   cost *=userCost
+   console.log(cost);
+
+    setTotal(cost);
+  };
+
   return (
     <Grid container direction="row">
       {/*--------First Block (Left Side)--------*/}
@@ -329,7 +345,10 @@ const Estimate = () => {
         {/*--------Second Block (The Button)--------*/}
         <Grid item>
           <Button
-            onClick={() => setIsDialogOpen(true)}
+            onClick={() => {
+              setIsDialogOpen(true);
+              getTotal();
+            }}
             variant="contained"
             className={classes.estimateButton}
           >

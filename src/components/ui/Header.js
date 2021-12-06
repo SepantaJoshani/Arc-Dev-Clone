@@ -1,6 +1,7 @@
 import {
   AppBar,
   Button,
+  Hidden,
   IconButton,
   List,
   ListItem,
@@ -244,8 +245,9 @@ const Header = ({value,setValue,selectedIndex,setSelectedIndex}) => {
             label={route.name}
           />
         ))}
+         <Tab style={{display:'none'}}/>
       </Tabs>
-      <Button
+         <Button
         disableRipple
         className={classes.button}
         variant="contained"
@@ -256,6 +258,7 @@ const Header = ({value,setValue,selectedIndex,setSelectedIndex}) => {
       >
         Free Estimate
       </Button>
+     
       <Menu
         style={{zIndex:1302}}
         id="simple-menu"
