@@ -266,7 +266,7 @@ const MobileApps = ( ) => {
         </Grid>
       </Grid>
       <Grid item>
-        <CallToAction setValue={setValue} />
+        <CallToAction  />
       </Grid>
     </Grid>
   );

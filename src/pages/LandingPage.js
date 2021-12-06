@@ -475,7 +475,7 @@ const LandingPage = () => {
       </Grid>
       <Grid item>
         {/*--------Call To Action Part--------*/}
-        <CallToAction setValue={setValue} />
+        <CallToAction  />
       </Grid>
     </Grid>
   );

@@ -463,7 +463,7 @@ const CustomSoftware = () => {
         </Grid>
       </Grid>
 
-      <CallToAction setValue={setValue} />
+      <CallToAction  />
     </Fragment>
   );
 };

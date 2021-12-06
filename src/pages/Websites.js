@@ -10,7 +10,7 @@ import outreach from "../assets/outreach.svg";
 import ecommerce from "../assets/ecommerce.svg";
 import React from "react";
 import CallToAction from "../components/CallToAction";
-import { NavContext } from '../context/nav-context';
+import { NavContext } from "../context/nav-context";
 import { useContext } from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Websites = () => {
-  const navCtx = useContext(NavContext)
-  const {setSelectedIndex, setValue}=navCtx
+  const navCtx = useContext(NavContext);
+  const { setSelectedIndex, setValue } = navCtx;
   const classes = useStyles();
   const theme = useTheme();
   const matchesMd = useMediaQuery(theme.breakpoints.down("md"));
@@ -72,21 +72,15 @@ const Websites = () => {
           </Grid>
         </Hidden>
 
-        <Grid
-          item
-          container
-          direction='column'
-          className={classes.heading}
-         
-        >
+        <Grid item container direction="column" className={classes.heading}>
           <Grid item>
-            <Typography  align={matchesMd ? "center" : "left"} variant="h2">
+            <Typography align={matchesMd ? "center" : "left"} variant="h2">
               Website Development
             </Typography>
           </Grid>
           <Grid item>
             <Typography
-               align={matchesMd ? "center" : "left"}
+              align={matchesMd ? "center" : "left"}
               variant="body1"
               paragraph
             >
@@ -299,7 +293,7 @@ const Websites = () => {
         </Grid>
       </Grid>
       <Grid item>
-        <CallToAction setValue={setValue} />
+        <CallToAction />
       </Grid>
     </Grid>
   );

@@ -5,6 +5,8 @@ import ButtonArrow from "./ui/ButtonArrow";
 import background from "../assets/background.jpg";
 import mobileBackground from "../assets/mobileBackground.jpg";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { NavContext } from "../context/nav-context";
 
 const useStyles = makeStyles((theme) => ({
   learnButton: {
@@ -47,7 +49,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CallToAction = ({ setValue }) => {
+const CallToAction = () => {
+  const navCtx = useContext(NavContext);
+  const { setValue } = navCtx;
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));

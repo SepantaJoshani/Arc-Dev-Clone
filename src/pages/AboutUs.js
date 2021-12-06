@@ -279,7 +279,7 @@ const AboutUs = () => {
         </Grid>
       </Grid>
       <Grid item>
-        <CallToAction setValue={setValue} />
+        <CallToAction  />
       </Grid>
     </Grid>
   );
