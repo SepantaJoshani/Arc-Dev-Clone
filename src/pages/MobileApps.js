@@ -17,6 +17,8 @@ import swiss from "../assets/swissKnife.svg";
 import access from "../assets/extendAccess.svg";
 import engagment from "../assets/increaseEngagement.svg";
 import CallToAction from "../components/CallToAction.js";
+import { useContext } from "react";
+import { NavContext } from '../context/nav-context';
 
 const useStyles = makeStyles((theme) => ({
   heading: {
@@ -35,7 +37,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MobileApps = ({ setValue, setSelectedIndex }) => {
+const MobileApps = ( ) => {
+  const navCtx = useContext(NavContext)
+  const {setSelectedIndex, setValue}=navCtx
   const classes = useStyles();
   const theme = useTheme();
   const matchesMd = useMediaQuery(theme.breakpoints.down("md"));

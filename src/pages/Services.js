@@ -12,6 +12,8 @@ import ButtonArrow from "../components/ui/ButtonArrow";
 import CustomSoftwareIcon from "../assets/Custom Software Icon.svg";
 import MobileIcon from "../assets/mobileIcon.svg";
 import WebsiteIcon from "../assets/websiteIcon.svg";
+import { useContext } from "react";
+import { NavContext } from "../context/nav-context";
 
 const useStyles = makeStyles((theme) => ({
   specialText: {
@@ -44,7 +46,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Services = ({ setValue, setSelectedIndex }) => {
+const Services = () => {
+  const navCtx = useContext(NavContext)
+  const {setValue,setSelectedIndex}=navCtx
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));

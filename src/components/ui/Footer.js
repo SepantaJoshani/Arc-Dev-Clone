@@ -4,6 +4,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import footerAdornment from "../../assets/Footer Adornment.svg";
 import { Facebook, Instagram, Twitter } from "@material-ui/icons";
+import { useContext } from "react";
+import { NavContext } from "../../context/nav-context";
 
 const useStyles = makeStyles((theme) => ({
   footer: {
@@ -50,7 +52,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Footer = ({ setValue,setSelectedIndex }) => {
+const Footer = () => {
+  const navCtx = useContext(NavContext)
+  const {setValue,setSelectedIndex}=navCtx
   const classes = useStyles();
   return (
     <footer className={classes.footer}>

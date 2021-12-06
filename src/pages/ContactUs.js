@@ -20,6 +20,8 @@ import phoneIcon from "../assets/phone.svg";
 import emailIcon from "../assets/email.svg";
 import airplane from "../assets/send.svg";
 import ButtonArrow from "../components/ui/ButtonArrow";
+import { useContext } from "react";
+import { NavContext } from "../context/nav-context";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -80,7 +82,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ContactUs = ({ setValue }) => {
+const ContactUs = () => {
+  const navCtx = useContext(NavContext);
+  const { setValue } = navCtx;
   const classes = useStyles();
   const theme = useTheme();
 

@@ -10,6 +10,8 @@ import outreach from "../assets/outreach.svg";
 import ecommerce from "../assets/ecommerce.svg";
 import React from "react";
 import CallToAction from "../components/CallToAction";
+import { NavContext } from '../context/nav-context';
+import { useContext } from "react";
 
 const useStyles = makeStyles((theme) => ({
   heading: {
@@ -31,7 +33,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Websites = ({ setValue, setSelectedIndex }) => {
+const Websites = () => {
+  const navCtx = useContext(NavContext)
+  const {setSelectedIndex, setValue}=navCtx
   const classes = useStyles();
   const theme = useTheme();
   const matchesMd = useMediaQuery(theme.breakpoints.down("md"));

@@ -26,6 +26,8 @@ import React, {
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import MenuIcon from "@material-ui/icons/Menu";
+import { useContext } from "react";
+import { NavContext } from '../../context/nav-context';
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -130,11 +132,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = ({value,setValue,selectedIndex,setSelectedIndex}) => {
+const Header = () => {
   const classes = useStyles();
   const theme = useTheme();
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const matches = useMediaQuery(theme.breakpoints.down("md"));
+  const navCtx = useContext(NavContext)
+  const {value,selectedIndex,setValue,setSelectedIndex}=navCtx
 
   const [openDrawer, setOpenDrawer] = useState(false);
 

@@ -1,5 +1,4 @@
 import { Route, Switch, Redirect } from "react-router-dom";
-import { useState } from "react";
 import LandingPage from "./pages/LandingPage";
 import Services from "./pages/Services";
 import CustomSoftware from "./pages/CustomSoftware";
@@ -12,95 +11,18 @@ import Estimate from "./pages/Estimate";
 import Layout from "./components/ui/Layout";
 
 function App() {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [value, setValue] = useState(0);
-
   return (
-    <Layout
-      value={value}
-      setValue={setValue}
-      selectedIndex={selectedIndex}
-      setSelectedIndex={setSelectedIndex}
-    >
+    <Layout>
       <Switch>
-        <Route
-          exact
-          path="/"
-          component={() => (
-            <LandingPage
-              setValue={setValue}
-              setSelectedIndex={setSelectedIndex}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/services"
-          component={() => (
-            <Services setValue={setValue} setSelectedIndex={setSelectedIndex} />
-          )}
-        />
-        <Route
-          exact
-          path="/customsoftware"
-          component={() => (
-            <CustomSoftware
-              setValue={setValue}
-              setSelectedIndex={setSelectedIndex}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/mobileapps"
-          component={() => (
-            <MobileApps
-              setValue={setValue}
-              setSelectedIndex={setSelectedIndex}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/websites"
-          component={() => (
-            <Websites setValue={setValue} setSelectedIndex={setSelectedIndex} />
-          )}
-        />
-        <Route
-          exact
-          path="/revolution"
-          component={() => (
-            <Revolution
-              setValue={setValue}
-              setSelectedIndex={setSelectedIndex}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/about"
-          component={() => (
-            <AboutUs setValue={setValue} setSelectedIndex={setSelectedIndex} />
-          )}
-        />
-        <Route
-          exact
-          path="/contact"
-          component={() => (
-            <ContactUs
-              setValue={setValue}
-              setSelectedIndex={setSelectedIndex}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/estimate"
-          component={() => (
-            <Estimate setValue={setValue} setSelectedIndex={setSelectedIndex} />
-          )}
-        />
+        <Route exact path="/" component={LandingPage} />
+        <Route exact path="/services" component={Services} />
+        <Route exact path="/customsoftware" component={CustomSoftware} />
+        <Route exact path="/mobileapps" component={MobileApps} />
+        <Route exact path="/websites" component={Websites} />
+        <Route exact path="/revolution" component={Revolution} />
+        <Route exact path="/about" component={AboutUs} />
+        <Route exact path="/contact" component={ContactUs} />
+        <Route exact path="/estimate" component={Estimate} />
         <Redirect from="*" to="/" />
       </Switch>
     </Layout>

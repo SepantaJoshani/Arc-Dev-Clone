@@ -20,6 +20,8 @@ import roots from "../assets/root.svg";
 import automationAnimation from "../animations/automationAnimation/data.json";
 import {uxAnimation} from "../animations/uxAnimation/data";
 import CallToAction from "../components/CallToAction";
+import { useContext } from "react";
+import { NavContext } from "../context/nav-context";
 
 const useStyles = makeStyles((theme) => ({
   heading: {
@@ -41,7 +43,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CustomSoftware = ({ setSelectedIndex, setValue }) => {
+const CustomSoftware = () => {
+  const navCtx = useContext(NavContext)
+  const {setSelectedIndex, setValue}=navCtx
   const theme = useTheme();
   const matchesMd = useMediaQuery(theme.breakpoints.down("md"));
   const matchesSm = useMediaQuery(theme.breakpoints.down("sm"));

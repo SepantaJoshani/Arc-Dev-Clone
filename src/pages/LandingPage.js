@@ -18,6 +18,8 @@ import revolutionBackground from "../assets/repeatingBackground.svg";
 import infoBackground from "../assets/infoBackground.svg";
 import CallToAction from "../components/CallToAction";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { NavContext } from "../context/nav-context";
 
 const useStyles = makeStyles((theme) => ({
   animation: {
@@ -122,7 +124,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LandingPage = ({ setValue, setSelectedIndex }) => {
+const LandingPage = () => {
+  const navCtx = useContext(NavContext)
+  const {setValue,setSelectedIndex}=navCtx
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
