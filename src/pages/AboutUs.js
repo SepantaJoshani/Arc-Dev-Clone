@@ -13,8 +13,8 @@ import yearbook from "../assets/yearbook.svg";
 import puppy from "../assets/puppy.svg";
 import { LoremIpsum } from "react-lorem-ipsum";
 import CallToAction from "../components/CallToAction";
-import { useContext } from "react";
-import { NavContext } from "../context/nav-context";
+// import { useContext } from "react";
+// import { NavContext } from "../context/nav-context";
 
 const useStyles = makeStyles((theme) => ({
   missionStatement: {
@@ -45,8 +45,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AboutUs = () => {
-  const navCtx = useContext(NavContext)
-  const {setValue}=navCtx
+  // const navCtx = useContext(NavContext)
+  // const {setValue}=navCtx  
   const classes = useStyles();
   const theme = useTheme();
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));

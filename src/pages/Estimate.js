@@ -12,8 +12,10 @@ import {
 import { makeStyles, useTheme } from "@material-ui/styles";
 import Lottie from "react-lottie";
 import backArrow from "../assets/backArrow.svg";
+import check from "../assets/check.svg";
 import forwardArrow from "../assets/forwardArrow.svg";
 import backArrowDisabled from "../assets/backArrowDisabled.svg";
+import send from '../assets/send.svg'
 import forwardArrowDisabled from "../assets/forwardArrowDisabled.svg";
 import { defaultQuestions } from "../data/data";
 import { websiteQuestions } from "../data/data";
@@ -366,7 +368,7 @@ const Estimate = () => {
         </Grid>
       </Grid>
       {/*--------Dialog(Optional Area)--------*/}
-      <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
+      <Dialog maxWidth open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
         <Grid container justifyContent="center">
           <Typography variant="h2" align="center">
             Estimate
@@ -375,10 +377,12 @@ const Estimate = () => {
         <DialogContent>
           <Grid container>
             {/*--------Dialog 's Left Side --------*/}
-            <Grid item container direction="column">
+          <Grid item md={7}>
+          <Grid item container  direction="column" alignItems='center' >
+              <Grid item>
               <Grid item style={{ marginBottom: "0.5em" }}>
                 <TextField
-                  fullWidth
+                  InputProps={{style:{width:350}}}
                   label="Name"
                   id="name"
                   value={name}
@@ -390,7 +394,7 @@ const Estimate = () => {
                 <TextField
                   error={emailHelper.length !== 0}
                   helperText={emailHelper}
-                  fullWidth
+                  InputProps={{style:{width:350}}}
                   label="Email"
                   id="email"
                   value={email}
@@ -400,9 +404,9 @@ const Estimate = () => {
 
               <Grid item style={{ marginBottom: "0.5em" }}>
                 <TextField
+                  InputProps={{style:{width:350}}}
                   error={phoneHelper.length !== 0}
                   helperText={phoneHelper}
-                  fullWidth
                   label="Phone"
                   id="phone"
                   value={phone}
@@ -412,8 +416,8 @@ const Estimate = () => {
 
               <Grid item style={{ minWidth: matchesXS ? "20em" : "30em" }}>
                 <TextField
-                  fullWidth
-                  InputProps={{ disableUnderline: true }}
+                  
+                  InputProps={{ disableUnderline: true,style:{width:350} }}
                   value={message}
                   className={classes.message}
                   id="message"
@@ -422,10 +426,13 @@ const Estimate = () => {
                   minRows={10}
                 />
               </Grid>
+              </Grid>
               <Grid item>
                 <Typography variant="body1" paragraph>
                   We can create this digital solution for an estimated{" "}
-                  <span className={classes.specialText}>{total.toFixed(2)}</span>
+                  <span className={classes.specialText}>
+                    {total.toFixed(2)}
+                  </span>
                 </Typography>
                 <Typography variant="body1" paragraph>
                   Fill out your name, number, and email, place your request, and
@@ -435,9 +442,48 @@ const Estimate = () => {
               </Grid>
             </Grid>
           </Grid>
+            {/* Dialog 's Right Side */}
+
+            <Grid item container direction="column"md={5} >
+              <Grid item>
+                <Grid item container direction="column">
+                  <Grid item container alignItems="center">
+                    <Grid item>
+                      <img src={check} alt="checkmark" />
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1">First Item Check</Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid item container alignItems="center">
+                    <Grid item>
+                      <img src={check} alt="checkmark" />
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1">Second Item Check</Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid item container alignItems="center">
+                    <Grid item>
+                      <img src={check} alt="checkmark" />
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1">Third Item Check</Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item>
+                <Button variant='contained' className={classes.estimateButton}>
+                  Place Request
+                  <img src={send} alt="airplane" style={{marginLeft:'0.5em'}} />
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
         </DialogContent>
       </Dialog>
-      {/* *************** */}
+      {/* End Of Dialog */}
     </Grid>
   );
 };
