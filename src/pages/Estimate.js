@@ -15,7 +15,7 @@ import backArrow from "../assets/backArrow.svg";
 import check from "../assets/check.svg";
 import forwardArrow from "../assets/forwardArrow.svg";
 import backArrowDisabled from "../assets/backArrowDisabled.svg";
-import send from '../assets/send.svg'
+import send from "../assets/send.svg";
 import forwardArrowDisabled from "../assets/forwardArrowDisabled.svg";
 import { defaultQuestions } from "../data/data";
 import { websiteQuestions } from "../data/data";
@@ -67,6 +67,12 @@ const Estimate = () => {
   const [phoneHelper, setPhoneHelper] = useState("");
   const [message, setMessage] = useState("");
   const [total, setTotal] = useState(0);
+  const [service, setService] = useState([]);
+  const [platforms, setPlatforms] = useState([]);
+  const [features, setFeatures] = useState([]);
+  const [customFeatures, setCustomFeatures] = useState("");
+  const [category, setCategory] = useState("");
+  const [users, setUsers] = useState("");
 
   const defaultOptions = {
     loop: true,
@@ -150,15 +156,18 @@ const Estimate = () => {
     switch (newSelected.title) {
       case "Custom Software Development":
         setQuestions(softwareQuestions);
+        setService(newSelected.title);
 
         break;
 
       case "iOS/Android App Development":
         setQuestions(softwareQuestions);
+        setService(newSelected.title);
         break;
 
       case "Website Development":
         setQuestions(websiteQuestions);
+        setService(newSelected.title);
         break;
 
       default:
@@ -210,16 +219,18 @@ const Estimate = () => {
       .filter((option) => option.length > 0);
 
     selections.map((options) => options.map((option) => (cost += option.cost)));
+    if (questions.length > 2) {
+      const userCost = questions
+        .filter(
+          (question) => question.title === "How many users do you expect?"
+        )
+        .map((question) =>
+          question.options.filter((option) => option.selected)
+        )[0][0].cost;
 
-    const userCost = questions
-      .filter((question) => question.title === "How many users do you expect?")
-      .map((question) =>
-        question.options.filter((option) => option.selected)
-      )[0][0].cost;
-
-    cost -= userCost;
-    cost *= userCost;
-
+      cost -= userCost;
+      cost *= userCost;
+    }
     setTotal(cost);
   };
 
@@ -368,7 +379,12 @@ const Estimate = () => {
         </Grid>
       </Grid>
       {/*--------Dialog(Optional Area)--------*/}
-      <Dialog maxWidth open={isDialogOpen} onClose={() => setIsDialogOpen(false)}>
+      <Dialog
+        maxWidth
+        open={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        style={{ zIndex: 1302 }}
+      >
         <Grid container justifyContent="center">
           <Typography variant="h2" align="center">
             Estimate
@@ -377,74 +393,76 @@ const Estimate = () => {
         <DialogContent>
           <Grid container>
             {/*--------Dialog 's Left Side --------*/}
-          <Grid item md={7}>
-          <Grid item container  direction="column" alignItems='center' >
-              <Grid item>
-              <Grid item style={{ marginBottom: "0.5em" }}>
-                <TextField
-                  InputProps={{style:{width:350}}}
-                  label="Name"
-                  id="name"
-                  value={name}
-                  onChange={(event) => setName(event.target.value)}
-                />
-              </Grid>
+            <Grid item md={7}>
+              <Grid item container direction="column" alignItems="center">
+                <Grid item>
+                  <Grid item style={{ marginBottom: "0.5em" }}>
+                    <TextField
+                      InputProps={{ style: { width: 350 } }}
+                      label="Name"
+                      id="name"
+                      value={name}
+                      onChange={(event) => setName(event.target.value)}
+                    />
+                  </Grid>
 
-              <Grid item style={{ marginBottom: "0.5em" }}>
-                <TextField
-                  error={emailHelper.length !== 0}
-                  helperText={emailHelper}
-                  InputProps={{style:{width:350}}}
-                  label="Email"
-                  id="email"
-                  value={email}
-                  onChange={onChange}
-                />
-              </Grid>
+                  <Grid item style={{ marginBottom: "0.5em" }}>
+                    <TextField
+                      error={emailHelper.length !== 0}
+                      helperText={emailHelper}
+                      InputProps={{ style: { width: 350 } }}
+                      label="Email"
+                      id="email"
+                      value={email}
+                      onChange={onChange}
+                    />
+                  </Grid>
 
-              <Grid item style={{ marginBottom: "0.5em" }}>
-                <TextField
-                  InputProps={{style:{width:350}}}
-                  error={phoneHelper.length !== 0}
-                  helperText={phoneHelper}
-                  label="Phone"
-                  id="phone"
-                  value={phone}
-                  onChange={onChange}
-                />
-              </Grid>
+                  <Grid item style={{ marginBottom: "0.5em" }}>
+                    <TextField
+                      InputProps={{ style: { width: 350 } }}
+                      error={phoneHelper.length !== 0}
+                      helperText={phoneHelper}
+                      label="Phone"
+                      id="phone"
+                      value={phone}
+                      onChange={onChange}
+                    />
+                  </Grid>
 
-              <Grid item style={{ minWidth: matchesXS ? "20em" : "30em" }}>
-                <TextField
-                  
-                  InputProps={{ disableUnderline: true,style:{width:350} }}
-                  value={message}
-                  className={classes.message}
-                  id="message"
-                  onChange={(event) => setMessage(event.target.value)}
-                  multiline
-                  minRows={10}
-                />
-              </Grid>
-              </Grid>
-              <Grid item>
-                <Typography variant="body1" paragraph>
-                  We can create this digital solution for an estimated{" "}
-                  <span className={classes.specialText}>
-                    {total.toFixed(2)}
-                  </span>
-                </Typography>
-                <Typography variant="body1" paragraph>
-                  Fill out your name, number, and email, place your request, and
-                  we’ll get back to you with details moving forward and a final
-                  price.
-                </Typography>
+                  <Grid item style={{ minWidth: matchesXS ? "20em" : "30em" }}>
+                    <TextField
+                      InputProps={{
+                        disableUnderline: true,
+                        style: { width: 350 },
+                      }}
+                      value={message}
+                      className={classes.message}
+                      id="message"
+                      onChange={(event) => setMessage(event.target.value)}
+                      multiline
+                      minRows={10}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid item>
+                  <Typography variant="body1" paragraph>
+                    We can create this digital solution for an estimated{" "}
+                    <span className={classes.specialText}>
+                      {total.toFixed(2)}
+                    </span>
+                  </Typography>
+                  <Typography variant="body1" paragraph>
+                    Fill out your name, number, and email, place your request,
+                    and we’ll get back to you with details moving forward and a
+                    final price.
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
             {/* Dialog 's Right Side */}
 
-            <Grid item container direction="column"md={5} >
+            <Grid item container direction="column" md={5}>
               <Grid item>
                 <Grid item container direction="column">
                   <Grid item container alignItems="center">
@@ -474,9 +492,13 @@ const Estimate = () => {
                 </Grid>
               </Grid>
               <Grid item>
-                <Button variant='contained' className={classes.estimateButton}>
+                <Button variant="contained" className={classes.estimateButton}>
                   Place Request
-                  <img src={send} alt="airplane" style={{marginLeft:'0.5em'}} />
+                  <img
+                    src={send}
+                    alt="airplane"
+                    style={{ marginLeft: "0.5em" }}
+                  />
                 </Button>
               </Grid>
             </Grid>
