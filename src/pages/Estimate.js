@@ -175,6 +175,32 @@ const Estimate = () => {
     }
   };
 
+  const dialogFirstCheckStatement = `for ${
+    //if only web application is selected...
+    platforms.indexOf("Web Application") > -1 &&
+    platforms.length === 1
+      ? //then finish sentence here
+        "a Web Application."
+      : //otherwise, if web application and another platform is selected...
+      platforms.indexOf("Web Application") > -1 &&
+        platforms.length === 2
+      ? //then finish the sentence here
+        `a Web Application and an ${platforms[1]}.`
+      : //otherwise, if only one platform is selected which isn't web application...
+      platforms.length === 1
+      ? //then finish the sentence here
+        `an ${platforms[0]}`
+      : //otherwise, if other two options are selected...
+      platforms.length === 2
+      ? //then finish the sentence here
+        "an iOS Application and an Android Application."
+      : //otherwise if all three are selected...
+      platforms.length === 3
+      ? //then finish the sentence here
+        "a Web Application, an iOS Application, and an Android Application."
+      : null
+  }`
+
   const onChange = (event) => {
     let isValid;
 
@@ -232,6 +258,24 @@ const Estimate = () => {
       cost *= userCost;
     }
     setTotal(cost);
+  };
+
+  const getPlatforms = () => {
+    if (questions.length > 2) {
+      let newPlatforms = [];
+
+      questions
+        .filter(
+          (question) =>
+            question.title === "Which platforms do you need supported?"
+        )
+        .map((question) =>
+          question.options.filter((option) => option.selected)
+        )[0]
+        .map((option) => newPlatforms.push(option.title));
+
+      setPlatforms(newPlatforms);
+    }
   };
 
   return (
@@ -370,6 +414,7 @@ const Estimate = () => {
             onClick={() => {
               setIsDialogOpen(true);
               getTotal();
+              getPlatforms();
             }}
             variant="contained"
             className={classes.estimateButton}
@@ -380,8 +425,9 @@ const Estimate = () => {
       </Grid>
       {/*--------Dialog(Optional Area)--------*/}
       <Dialog
-        maxWidth
+        maxWidth="xl"
         open={isDialogOpen}
+        fullScreen={matchesXS}
         onClose={() => setIsDialogOpen(false)}
         style={{ zIndex: 1302 }}
       >
@@ -470,7 +516,9 @@ const Estimate = () => {
                       <img src={check} alt="checkmark" />
                     </Grid>
                     <Grid item>
-                      <Typography variant="body1">First Item Check</Typography>
+                      <Typography variant="body1">You Want {service}
+                      {platforms.length>0 && dialogFirstCheckStatement}
+                      </Typography>
                     </Grid>
                   </Grid>
                   <Grid item container alignItems="center">
