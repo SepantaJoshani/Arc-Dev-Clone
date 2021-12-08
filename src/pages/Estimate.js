@@ -157,17 +157,32 @@ const Estimate = () => {
       case "Custom Software Development":
         setQuestions(softwareQuestions);
         setService(newSelected.title);
+        setPlatforms([]);
+        setFeatures([]);
+        setCustomFeatures("");
+        setCategory("");
+        setUsers("");
 
         break;
 
       case "iOS/Android App Development":
         setQuestions(softwareQuestions);
         setService(newSelected.title);
+        setPlatforms([]);
+        setFeatures([]);
+        setCustomFeatures("");
+        setCategory("");
+        setUsers("");
         break;
 
       case "Website Development":
         setQuestions(websiteQuestions);
         setService(newSelected.title);
+        setPlatforms([]);
+        setFeatures([]);
+        setCustomFeatures("");
+        setCategory("");
+        setUsers("");
         break;
 
       default:
@@ -310,6 +325,103 @@ const Estimate = () => {
     }
   };
 
+  const getCategory = () => {
+    if (questions.length === 2) {
+      const newCategory = questions
+        .filter(
+          (question) =>
+            question.title === "Which type of website are you wanting?"
+        )[0]
+        .options.filter((option) => option.selected)[0].title;
+
+      setCategory(newCategory);
+    }
+  };
+
+  const softwareSelection = (
+    <Fragment>
+      <Grid item container direction="column">
+        <Grid item container alignItems="center">
+          <Grid item>
+            <img src={check} alt="checkmark" />
+          </Grid>
+          <Grid item>
+            <Typography variant="body1">
+              You Want {service}
+              {platforms.length > 0 && dialogFirstCheckStatement}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid item container alignItems="center">
+          <Grid item>
+            <img src={check} alt="checkmark" />
+          </Grid>
+          <Grid item>
+            <Typography variant="body1">
+              {"with "}
+              {/* if we have features... */}
+              {features.length > 0
+                ? //...and there's only 1...
+                  features.length === 1
+                  ? //then end the sentence here
+                    `${features[0]}.`
+                  : //otherwise, if there are two features...
+                  features.length === 2
+                  ? //...then end the sentence here
+                    `${features[0]} and ${features[1]}.`
+                  : //otherwise, if there are three or more features...
+                    features
+                      //filter out the very last feature...
+                      .filter((feature, index) => index !== features.length - 1)
+                      //and for those features return their name...
+                      .map((feature, index) => (
+                        <span key={index}>{`${feature}, `}</span>
+                      ))
+                : null}
+              {features.length > 0 &&
+              features.length !== 1 &&
+              features.length !== 2
+                ? //...and then finally add the last feature with 'and' in front of it
+                  ` and ${features[features.length - 1]}.`
+                : null}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid item container alignItems="center">
+          <Grid item>
+            <img src={check} alt="checkmark" />
+          </Grid>
+          <Grid item>
+            <Typography variant="body1">
+              The custom features will be of {customFeatures.toLowerCase()}
+              {`, and the project will be used by about ${users}users`}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Fragment>
+  );
+
+  const websiteSelection = (
+    <Fragment>
+      <Grid item container direction="column">
+        <Grid item container alignItems="center">
+          <Grid item>
+            <img src={check} alt="checkmark" />
+          </Grid>
+          <Grid item>
+            <Typography variant="body1">
+              You want{" "}
+              {category === "Basic"
+                ? "a Basic Website"
+                : `an ${category} Website.`}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Fragment>
+  );
+
   return (
     <Grid container direction="row">
       {/*--------First Block (Left Side)--------*/}
@@ -449,6 +561,7 @@ const Estimate = () => {
               getPlatforms();
               getFeatures();
               getCustomFeatures();
+              getCategory();
             }}
             variant="contained"
             className={classes.estimateButton}
@@ -544,69 +657,7 @@ const Estimate = () => {
 
             <Grid item container direction="column" md={5}>
               <Grid item>
-                <Grid item container direction="column">
-                  <Grid item container alignItems="center">
-                    <Grid item>
-                      <img src={check} alt="checkmark" />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1">
-                        You Want {service}
-                        {platforms.length > 0 && dialogFirstCheckStatement}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid item container alignItems="center">
-                    <Grid item>
-                      <img src={check} alt="checkmark" />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1">
-                        {"with "}
-                        {/* if we have features... */}
-                        {features.length > 0
-                          ? //...and there's only 1...
-                            features.length === 1
-                            ? //then end the sentence here
-                              `${features[0]}.`
-                            : //otherwise, if there are two features...
-                            features.length === 2
-                            ? //...then end the sentence here
-                              `${features[0]} and ${features[1]}.`
-                            : //otherwise, if there are three or more features...
-                              features
-                                //filter out the very last feature...
-                                .filter(
-                                  (feature, index) =>
-                                    index !== features.length - 1
-                                )
-                                //and for those features return their name...
-                                .map((feature, index) => (
-                                  <span key={index}>{`${feature}, `}</span>
-                                ))
-                          : null}
-                        {features.length > 0 &&
-                        features.length !== 1 &&
-                        features.length !== 2
-                          ? //...and then finally add the last feature with 'and' in front of it
-                            ` and ${features[features.length - 1]}.`
-                          : null}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid item container alignItems="center">
-                    <Grid item>
-                      <img src={check} alt="checkmark" />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1">
-                        The custom features will be of{" "}
-                        {customFeatures.toLowerCase()}
-                        {`, and the project will be used by about ${users}users`}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
+                {questions.length > 2 ? softwareSelection : websiteSelection}
               </Grid>
               <Grid item>
                 <Button variant="contained" className={classes.estimateButton}>
