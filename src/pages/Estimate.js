@@ -250,10 +250,12 @@ const Estimate = () => {
         )
         .map((question) =>
           question.options.filter((option) => option.selected)
-        )[0][0].cost;
+        )[0][0];
 
-      cost -= userCost;
-      cost *= userCost;
+      setUsers(userCost.title);
+
+      cost -= userCost.cost;
+      cost *= userCost.cost;
     }
     setTotal(cost);
   };
@@ -289,6 +291,22 @@ const Estimate = () => {
         );
 
       setFeatures(newFeatures);
+    }
+  };
+
+  const getCustomFeatures = () => {
+    if (questions.length > 2) {
+      const newCustomFeatures = questions
+        .filter(
+          (question) =>
+            question.title ===
+            "What type of custom features do you expect to need?"
+        )
+        .map((question) =>
+          question.options.filter((option) => option.selected)
+        )[0][0].title;
+
+      setCustomFeatures(newCustomFeatures);
     }
   };
 
@@ -430,6 +448,7 @@ const Estimate = () => {
               getTotal();
               getPlatforms();
               getFeatures();
+              getCustomFeatures();
             }}
             variant="contained"
             className={classes.estimateButton}
@@ -580,7 +599,11 @@ const Estimate = () => {
                       <img src={check} alt="checkmark" />
                     </Grid>
                     <Grid item>
-                      <Typography variant="body1">Third Item Check</Typography>
+                      <Typography variant="body1">
+                        The custom features will be of{" "}
+                        {customFeatures.toLowerCase()}
+                        {`, and the project will be used by about ${users}users`}
+                      </Typography>
                     </Grid>
                   </Grid>
                 </Grid>
