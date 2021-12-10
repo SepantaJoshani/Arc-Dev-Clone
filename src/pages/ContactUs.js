@@ -345,7 +345,7 @@ const ContactUs = () => {
       <Dialog
         style={{ zIndex: 1302 }}
         open={open}
-        fullScreen={matchesXS}
+        fullScreen={matchesSM}
         onClose={() => setOpen(false)}
         fullWidth
         maxWidth="xl"
