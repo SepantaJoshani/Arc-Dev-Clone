@@ -396,6 +396,30 @@ const Estimate = () => {
       });
   };
 
+  const estimateDisabled = () => {
+    let disabled = true;
+
+    const emptySelections = questions
+      .map((question) => question.options.filter((option) => option.selected))
+      .filter((question) => question.length === 0);
+
+    if (questions.length === 2) {
+      if (emptySelections.length === 1) {
+        disabled = false;
+      }
+    } else if (questions.length === 1) {
+      disabled = true;
+    } else if (
+      emptySelections.length < 3 &&
+      questions[questions.length - 1].options.filter(
+        (option) => option.selected
+      ).length > 0
+    ) {
+      disabled = false;
+    }
+    return disabled;
+  };
+
   const softwareSelection = (
     <Hidden smDown>
       <Grid item container direction="column">
@@ -506,7 +530,11 @@ const Estimate = () => {
             marginTop: "7.5em",
           }}
         >
-          <Lottie options={defaultOptions} width="100%" height="100%" />
+          <Lottie
+            options={defaultOptions}
+            width={matchesSM ? "90%" : "100%"}
+            height="100%"
+          />
         </Grid>
       </Grid>
       {/*--------Second  Block (Right side Questions)--------*/}
@@ -624,8 +652,14 @@ const Estimate = () => {
           </Grid>
         </Grid>
         {/*--------Second Block (The Button)--------*/}
+        <Grid item container style={{ width: "18em",marginTop:'1.25rem' }}>
+          <Typography variant="caption" color="primary" align="center">
+            Please choose each question for each service you are interested to make button enabled
+          </Typography>
+        </Grid>
         <Grid item>
           <Button
+            disabled={estimateDisabled()}
             onClick={() => {
               setIsDialogOpen(true);
               getTotal();
@@ -834,7 +868,7 @@ const Estimate = () => {
           onClose={() => setAlert({ ...alert, open: false })}
           severity={alert.severity}
         >
-         {alert.message}
+          {alert.message}
         </Alert>
       </Snackbar>
     </Grid>
