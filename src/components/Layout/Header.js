@@ -1,12 +1,17 @@
 import {
   AppBar,
   Button,
+  ClickAwayListener,
+  Grow,
   IconButton,
   List,
   ListItem,
   ListItemText,
   Menu,
   MenuItem,
+  MenuList,
+  Paper,
+  Popper,
   SwipeableDrawer,
   Tab,
   Tabs,
@@ -27,7 +32,7 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useContext } from "react";
-import { NavContext } from '../../context/nav-context';
+import { NavContext } from "../../context/nav-context";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -78,9 +83,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "20px",
     height: "50px",
     ...theme.typography.estimate,
-    "&:hover":{
-      backgroundColor:theme.palette.secondary.light
-  },
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.light,
+    },
   },
   logoContainer: {
     padding: 0,
@@ -90,12 +95,13 @@ const useStyles = makeStyles((theme) => ({
   },
   menu: {
     backgroundColor: theme.palette.common.blue,
-    color:'white',
+    color: "white",
     borderRadius: "0px",
+    zIndex: 1302,
   },
   menuItem: {
     ...theme.typography.tab,
-    color:'white',
+    color: "white",
     opacity: 0.7,
     "&:hover": {
       opacity: 1,
@@ -123,13 +129,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.orange,
   },
   drawerItemSelected: {
-   '& .MuiListItemText-root':{
-     opacity: 1
-   }
+    "& .MuiListItemText-root": {
+      opacity: 1,
+    },
   },
-  appbar:{
-    zIndex:theme.zIndex.modal + 1,
-  }
+  appbar: {
+    zIndex: theme.zIndex.modal + 1,
+  },
 }));
 
 const Header = () => {
@@ -137,14 +143,13 @@ const Header = () => {
   const theme = useTheme();
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const matches = useMediaQuery(theme.breakpoints.down("md"));
-  const navCtx = useContext(NavContext)
-  const {value,selectedIndex,setValue,setSelectedIndex}=navCtx
+  const navCtx = useContext(NavContext);
+  const { value, selectedIndex, setValue, setSelectedIndex } = navCtx;
 
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
- 
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -166,26 +171,32 @@ const Header = () => {
     setOpenMenu(false);
   };
 
+  function handleListKeyDown(event) {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      setOpenMenu(false);
+    }
+  }
+
   const menuOptions = useMemo(() => {
     return [
-      { name: "Services", link: "/services", activeIndex: 1, selectedIndex: 0 },
       {
         name: "Custom Software Development",
         link: "/customsoftware",
         activeIndex: 1,
-        selectedIndex: 1,
+        selectedIndex: 0,
       },
       {
         name: "iOS/Android Development",
         link: "/mobileapps",
         activeIndex: 1,
-        selectedIndex: 2,
+        selectedIndex: 1,
       },
       {
         name: "Custom Website Development",
         link: "/websites",
         activeIndex: 1,
-        selectedIndex: 3,
+        selectedIndex: 2,
       },
     ];
   }, []);
@@ -226,8 +237,9 @@ const Header = () => {
           break;
       }
     });
-  }, [value, menuOptions, selectedIndex, routes,setValue,setSelectedIndex]);
+  }, [value, menuOptions, selectedIndex, routes, setValue, setSelectedIndex]);
 
+  /********** TABS & Menu  **********/
   const tabs = (
     <Fragment>
       <Tabs
@@ -242,28 +254,85 @@ const Header = () => {
             aria-owns={route.ariaOwns}
             aria-haspopup={route.ariaPopup}
             onMouseOver={route.mouseOver}
+            onMouseLeave={() => setOpenMenu(false)}
             className={classes.tab}
             component={Link}
             to={route.link}
             label={route.name}
           />
         ))}
-         <Tab style={{display:'none'}}/>
+        <Tab style={{ display: "none" }} />
       </Tabs>
-         <Button
+      <Button
         disableRipple
         className={classes.button}
         variant="contained"
         color="secondary"
         component={Link}
-        to='/estimate'
-        onClick={()=>{setValue(5)}}
+        to="/estimate"
+        onClick={() => {
+          setValue(5);
+        }}
       >
         Free Estimate
       </Button>
-     
-      <Menu
-        style={{zIndex:1302}}
+
+      {/********** Popper Menu **********/}
+
+      <Popper
+        open={openMenu}
+        anchorEl={anchorEl}
+        role={undefined}
+        transition
+        disablePortal
+        placement="bottom-start"
+      >
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{
+              transformOrigin: "top-left",
+            }}
+          >
+            <Paper classes={{ root: classes.menu }} elevation={0}>
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList
+                  onMouseLeave={handleClose}
+                  onMouseOver={()=>setOpenMenu(true)}
+                  disablePadding
+                  // autoFocusItem={false}
+                  id="simple-menu"
+                  onKeyDown={handleListKeyDown}
+                >
+                  {menuOptions.map((option, i) => (
+                    <MenuItem
+                      key={`${option} ${i}`}
+                      onClick={(event) => {
+                        handleMenuItemsClick(event, i);
+                        setValue(1);
+                        handleClose();
+                      }}
+                      classes={{ root: classes.menuItem }}
+                      component={Link}
+                      to={option.link}
+                      selected={
+                        i === selectedIndex &&
+                        value === 1 &&
+                        window.location.pathname !== "/services"
+                      }
+                    >
+                      {option.name}
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+
+      {/* <Menu
+        style={{ zIndex: 1302 }}
         id="simple-menu"
         anchorEl={anchorEl}
         MenuListProps={{ onMouseLeave: handleClose }}
@@ -272,26 +341,11 @@ const Header = () => {
         classes={{ paper: classes.menu }}
         elevation={0}
         keepMounted
-      >
-        {menuOptions.map((option, i) => (
-          <MenuItem
-            key={`${option} ${i}`}
-            onClick={(event) => {
-              handleMenuItemsClick(event, i);
-              setValue(1);
-              handleClose();
-            }}
-            classes={{ root: classes.menuItem }}
-            component={Link}
-            to={option.link}
-            selected={i === selectedIndex && value === 1}
-          >
-            {option.name}
-          </MenuItem>
-        ))}
-      </Menu>
+      ></Menu> */}
     </Fragment>
   );
+
+  /********** Drawer **********/
 
   const drawer = (
     <Fragment>
@@ -317,20 +371,19 @@ const Header = () => {
               component={Link}
               to={route.link}
               selected={value === route.activeIndex}
-              classes={{selected:classes.drawerItemSelected}}
+              classes={{ selected: classes.drawerItemSelected }}
             >
-              <ListItemText
-                className={classes.drawrItem}
-
-                disableTypography
-              >
+              <ListItemText className={classes.drawrItem} disableTypography>
                 {route.name}
               </ListItemText>
             </ListItem>
           ))}
 
           <ListItem
-            classes={{root:classes.drawerItemEstimate,selected:classes.drawerItemSelected}}
+            classes={{
+              root: classes.drawerItemEstimate,
+              selected: classes.drawerItemSelected,
+            }}
             onClick={() => {
               setOpenDrawer(false);
               setValue(5);
@@ -340,11 +393,7 @@ const Header = () => {
             to="/estimate"
             selected={value === 5}
           >
-            <ListItemText
-              className={classes.drawrItem}
-               
-              disableTypography
-            >
+            <ListItemText className={classes.drawrItem} disableTypography>
               Free Estimate
             </ListItemText>
           </ListItem>
@@ -365,7 +414,7 @@ const Header = () => {
   return (
     <Fragment>
       <ElevationScroll>
-        <AppBar position='fixed' className={classes.appbar}>
+        <AppBar position="fixed" className={classes.appbar}>
           <Toolbar disableGutters>
             <Button
               disableRipple

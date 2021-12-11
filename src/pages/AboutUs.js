@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AboutUs = () => {
   // const navCtx = useContext(NavContext)
-  // const {setValue}=navCtx  
+  // const {setValue}=navCtx
   const classes = useStyles();
   const theme = useTheme();
   const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
@@ -187,9 +187,6 @@ const AboutUs = () => {
           <Typography variant="body1" paragraph align="center">
             Sepanta Joshany
           </Typography>
-          <Typography variant="body1" paragraph align="center">
-            I just cloned this site as a training
-          </Typography>
         </Grid>
         <Grid item>
           <Avatar alt="founder" src={Sepanta} className={classes.avatar} />
@@ -232,7 +229,7 @@ const AboutUs = () => {
             </Grid>
             <Grid item>
               <Typography variant="caption">
-                a page from Zach yearbook
+                Lorem ipsum dolor sit amet
               </Typography>
             </Grid>
           </Grid>
@@ -272,14 +269,14 @@ const AboutUs = () => {
             </Grid>
             <Grid item>
               <Typography variant="caption">
-                Zach 's miniature dapple dachshund, Sterling
+                Lorem ipsum dolor sit amet
               </Typography>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
       <Grid item>
-        <CallToAction  />
+        <CallToAction />
       </Grid>
     </Grid>
   );

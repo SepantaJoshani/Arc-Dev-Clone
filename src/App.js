@@ -8,7 +8,8 @@ import Revolution from "./pages/Revolution";
 import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 import Estimate from "./pages/Estimate";
-import Layout from "./components/ui/Layout";
+import Layout from './components/Layout/Layout';
+
 
 function App() {
   return (

@@ -652,9 +652,10 @@ const Estimate = () => {
           </Grid>
         </Grid>
         {/*--------Second Block (The Button)--------*/}
-        <Grid item container style={{ width: "18em",marginTop:'1.25rem' }}>
+        <Grid item container style={{ width: "18em", marginTop: "1.25rem" }}>
           <Typography variant="caption" color="primary" align="center">
-            Please choose each question for each service you are interested to make button enabled
+            Please choose each question for each service you are interested to
+            make button enabled
           </Typography>
         </Grid>
         <Grid item>
@@ -755,6 +756,7 @@ const Estimate = () => {
                     style={{ minWidth: matchesXS ? "20em" : "30em" }}
                   >
                     <TextField
+                      placeholder="Tell us more about your project"
                       InputProps={{
                         disableUnderline: true,
                         style: { width: 350 },
@@ -832,6 +834,14 @@ const Estimate = () => {
                   variant="contained"
                   className={classes.estimateButton}
                   style={{ marginTop: matchesSM ? 0 : "5em" }}
+                  disabled={
+                    name.length === 0 ||
+                    message.length === 0 ||
+                    email.length === 0 ||
+                    phone.length === 0 ||
+                    phoneHelper.length !== 0 ||
+                    emailHelper.length !== 0
+                  }
                 >
                   {loading && <CircularProgress />}
                   {!loading && (
