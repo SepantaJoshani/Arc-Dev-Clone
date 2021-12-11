@@ -469,7 +469,7 @@ const ContactUs = () => {
           onClose={() => setAlert({ ...alert, open: false })}
           severity={alert.severity}
         >
-          This is a success message!
+          {alert.message}
         </Alert>
       </Snackbar>
 

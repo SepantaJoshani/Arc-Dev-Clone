@@ -9,6 +9,8 @@ import {
   useMediaQuery,
   TextField,
   Hidden,
+  Snackbar,
+  CircularProgress,
 } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/styles";
 import Lottie from "react-lottie";
@@ -23,6 +25,13 @@ import { websiteQuestions } from "../data/data";
 import { softwareQuestions } from "../data/data";
 import estimateAnimation from "../animations/estimateAnimation/data.json";
 import cloneDeep from "lodash.clonedeep";
+import axios from "axios";
+
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -77,6 +86,14 @@ const Estimate = () => {
   const [customFeatures, setCustomFeatures] = useState("");
   const [category, setCategory] = useState("");
   const [users, setUsers] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState({
+    open: false,
+    message: "",
+    backgroundColor: "",
+    severity: "",
+  });
 
   const defaultOptions = {
     loop: true,
@@ -340,6 +357,43 @@ const Estimate = () => {
 
       setCategory(newCategory);
     }
+  };
+
+  const sendEstimate = () => {
+    setLoading(true);
+    axios
+      .post("https://jsonplaceholder.typicode.com/posts", {
+        name,
+        email,
+        phone,
+        message,
+        total,
+        category,
+        service,
+        platforms,
+        features,
+        customFeatures,
+        users,
+      })
+      .then((res) => {
+        setLoading(false);
+        setAlert({
+          open: true,
+          message: "Estimate Placed Successfully",
+          backgroundColor: "#4BB543",
+          severity: "success",
+        });
+        setIsDialogOpen(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        setAlert({
+          open: true,
+          message: "Sending Message Failed",
+          backgroundColor: "#FF3232",
+          severity: "error",
+        });
+      });
   };
 
   const softwareSelection = (
@@ -740,23 +794,49 @@ const Estimate = () => {
                   </Button>
                 </Hidden>
                 <Button
+                  onClick={sendEstimate}
                   variant="contained"
                   className={classes.estimateButton}
                   style={{ marginTop: matchesSM ? 0 : "5em" }}
                 >
-                  Place Request
-                  <img
-                    src={send}
-                    alt="airplane"
-                    style={{ marginLeft: "0.5em" }}
-                  />
+                  {loading && <CircularProgress />}
+                  {!loading && (
+                    <Fragment>
+                      Place Request
+                      <img
+                        src={send}
+                        alt="airplane"
+                        style={{ marginLeft: "0.5em" }}
+                      />
+                    </Fragment>
+                  )}
                 </Button>
               </Grid>
             </Grid>
           </Grid>
         </DialogContent>
       </Dialog>
-      {/* End Of Dialog */}
+
+      {/*--------Snackbar part (optional place)--------*/}
+      <Snackbar
+        open={alert.open}
+        message={alert.message}
+        ContentProps={{
+          style: {
+            background: alert.backgroundColor,
+          },
+        }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={() => setAlert({ ...alert, open: false })}
+        autoHideDuration={2000}
+      >
+        <Alert
+          onClose={() => setAlert({ ...alert, open: false })}
+          severity={alert.severity}
+        >
+         {alert.message}
+        </Alert>
+      </Snackbar>
     </Grid>
   );
 };
