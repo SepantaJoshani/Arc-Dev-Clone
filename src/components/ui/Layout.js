@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
-import { Paper } from "@material-ui/core";
 
 const Layout = ({
   value,

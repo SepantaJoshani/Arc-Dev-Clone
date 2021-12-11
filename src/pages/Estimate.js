@@ -43,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
   },
   message: {
     border: `2px solid ${theme.palette.common.blue}`,
-    marginTop: "5em",
+    marginTop: "3em",
+    marginBottom: "2rem",
     borderRadius: 5,
   },
   specialText: {
@@ -59,6 +60,7 @@ const Estimate = () => {
   const theme = useTheme();
   const matchesXS = useMediaQuery(theme.breakpoints.down("xs"));
   const matchesSM = useMediaQuery(theme.breakpoints.down("sm"));
+  const matchesMD = useMediaQuery(theme.breakpoints.down("md"));
 
   const [questions, setQuestions] = useState(defaultQuestions);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -427,30 +429,40 @@ const Estimate = () => {
   return (
     <Grid container direction="row">
       {/*--------First Block (Left Side)--------*/}
-      <Grid item container direction="column" lg>
-        <Grid item style={{ marginTop: "2em", marginLeft: "5em" }}>
-          <Typography variant="h2">Estimate</Typography>
+      <Grid
+        item
+        container
+        direction="column"
+        lg
+        alignItems={matchesMD ? "center" : "flex-start"}
+      >
+        <Grid
+          item
+          style={{ marginTop: "2em", marginLeft: matchesMD ? 0 : "5em" }}
+        >
+          <Typography align={matchesMD ? "center" : "left"} variant="h2">
+            Estimate
+          </Typography>
         </Grid>
         <Grid
           item
-          style={{ marginRight: "10em", maxWidth: "50em", marginTop: "7.5em" }}
+          style={{
+            marginRight: matchesMD ? 0 : "10em",
+            maxWidth: "50em",
+            marginTop: "7.5em",
+          }}
         >
-          <Lottie
-            options={defaultOptions}
-            isStopped
-            width="100%"
-            height="100%"
-          />
+          <Lottie options={defaultOptions} width="100%" height="100%" />
         </Grid>
       </Grid>
-      {/*--------Second  Block (Right side)--------*/}
+      {/*--------Second  Block (Right side Questions)--------*/}
       <Grid
         item
         container
         direction="column"
         alignItems="center"
         lg
-        style={{ marginRight: "2em", marginBottom: "25em" }}
+        style={{ marginRight: matchesMD ? 0 : "2em", marginBottom: "25em" }}
       >
         {questions
           .filter((question) => question.active)
@@ -465,6 +477,8 @@ const Estimate = () => {
                     marginTop: "5em",
                     fontSize: "2.25em",
                     lineHeight: 1.25,
+                    marginLeft: matchesSM ? "1rem" : 0,
+                    marginRight: matchesSM ? "1rem" : 0,
                   }}
                 >
                   {question.title}
@@ -494,6 +508,7 @@ const Estimate = () => {
                       display: "grid",
                       textTransform: "none",
                       borderRadius: 0,
+                      marginBottom: matchesSM ? "1.5rem" : 0,
                       background: option.selected
                         ? theme.palette.common.orange
                         : null,
@@ -574,14 +589,18 @@ const Estimate = () => {
       </Grid>
       {/*--------Dialog(Optional Area)--------*/}
       <Dialog
-        maxWidth="xl"
-        PaperProps={{ style: { width: "100%" } }}
+        maxWidth="lg"
         open={isDialogOpen}
         fullScreen={matchesSM}
         onClose={() => setIsDialogOpen(false)}
         style={{ zIndex: 1302 }}
+        fullWidth
       >
-        <Grid container justifyContent="center">
+        <Grid
+          container
+          justifyContent="center"
+          style={{ marginTop: "1.25rem" }}
+        >
           <Typography variant="h2" align="center">
             Estimate
           </Typography>
@@ -661,7 +680,13 @@ const Estimate = () => {
                     />
                   </Grid>
                 </Grid>
-                <Grid item container direction="column" alignItems="center">
+                <Grid
+                  item
+                  container
+                  direction="column"
+                  alignItems="center"
+                  style={{ marginTop: matchesSM ? "2rem" : 0 }}
+                >
                   <Typography
                     variant="body1"
                     align="center"
@@ -688,26 +713,25 @@ const Estimate = () => {
             </Grid>
             {/* Dialog 's Right Side */}
 
-            <Grid item container direction="column" md={5}>
+            <Grid
+              item
+              container
+              direction="column"
+              justifyContent={matchesSM ? "flex-start" : "center"}
+              md={5}
+            >
               <Grid item>
                 {questions.length > 2 ? softwareSelection : websiteSelection}
               </Grid>
               <Grid
+                style={{ marginTop: matchesSM ? "5rem" : 0 }}
                 item
                 container
-                direction='column'
+                direction="column"
                 alignItems={matchesSM ? "center" : "flex-start"}
               >
-                <Button variant="contained" className={classes.estimateButton}>
-                  Place Request
-                  <img
-                    src={send}
-                    alt="airplane"
-                    style={{ marginLeft: "0.5em" }}
-                  />
-                </Button>
                 <Hidden mdUp>
-                <Button
+                  <Button
                     style={{ fontWeight: 300 }}
                     color="primary"
                     onClick={() => setIsDialogOpen(false)}
@@ -715,6 +739,18 @@ const Estimate = () => {
                     Cancel
                   </Button>
                 </Hidden>
+                <Button
+                  variant="contained"
+                  className={classes.estimateButton}
+                  style={{ marginTop: matchesSM ? 0 : "5em" }}
+                >
+                  Place Request
+                  <img
+                    src={send}
+                    alt="airplane"
+                    style={{ marginLeft: "0.5em" }}
+                  />
+                </Button>
               </Grid>
             </Grid>
           </Grid>
