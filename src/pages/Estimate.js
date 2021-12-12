@@ -26,12 +26,9 @@ import estimateAnimation from "../animations/estimateAnimation/data.json";
 import cloneDeep from "lodash.clonedeep";
 import { AlertContext } from "../context/alert-context";
 import AlertSnack from "../components/Snackbar/AlertSnack";
-import MuiAlert from "@material-ui/lab/Alert";
 import { useHttp } from "../hooks/use-http";
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+
 
 const useStyles = makeStyles((theme) => ({
   icon: {

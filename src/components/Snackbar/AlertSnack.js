@@ -1,7 +1,17 @@
 import { Snackbar } from "@material-ui/core";
 import React from "react";
+import  MuiAlert  from "@material-ui/lab/Alert";
 
-const Alert = ({ open, backgroundColor, onClose, severity, alertMessage }) => {
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+const AlertSnack = ({
+  open,
+  backgroundColor,
+  onClose,
+  severity,
+  alertMessage,
+}) => {
   return (
     <Snackbar
       open={open}
@@ -22,4 +32,4 @@ const Alert = ({ open, backgroundColor, onClose, severity, alertMessage }) => {
   );
 };
 
-export default React.memo(Alert);
+export default React.memo(AlertSnack);

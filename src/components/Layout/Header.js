@@ -24,6 +24,7 @@ import {
   useTheme,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+
 import React, {
   Fragment,
   useCallback,
@@ -31,12 +32,12 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useContext } from "react";
 import { NavContext } from "../../context/nav-context";
 import { ExpandMore } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -140,15 +141,39 @@ const useStyles = makeStyles((theme) => ({
   appbar: {
     zIndex: theme.zIndex.modal + 1,
   },
+
+  expansion: {
+    background: theme.palette.common.blue,
+    borderBottom: "1px solid rgba(0,0,0,0.12)",
+
+    "&.Mui-expanded": {
+      margin: 0,
+      borderBottom: 0,
+    },
+    "&::before": {
+      background: "rgba(0,0,0,0)",
+    },
+  },
+  expansionDetails: {
+    padding: 0,
+    background: "#3b8ec7",
+  },
+  expanstionSummary: {
+    padding: "0 24px 0 16px",
+    "&:hover": {
+      background: "rgba(0,0,0,0.08)",
+    },
+    background: (value) => (value === 1 ? "rgba(0,0,0,0.14)" : "inherit"),
+  },
 }));
 
 const Header = () => {
-  const classes = useStyles();
   const theme = useTheme();
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const matches = useMediaQuery(theme.breakpoints.down("md"));
   const navCtx = useContext(NavContext);
   const { value, selectedIndex, setValue, setSelectedIndex } = navCtx;
+  const classes = useStyles(value);
 
   const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -356,16 +381,40 @@ const Header = () => {
       >
         <div className={classes.toolbarMargin} />
         <List disablePadding>
-          {routes.map((route) =>
+          {routes.map((route, index) =>
             route.name === "Services" ? (
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMore />}>
-                  {route.name}
+              <Accordion
+                key={route.name}
+                elevation={0}
+                classes={{ root: classes.expansion }}
+              >
+                <AccordionSummary
+                  classes={{ root: classes.expanstionSummary }}
+                  expandIcon={<ExpandMore color="secondary" />}
+                >
+                  <ListItemText
+                    className={classes.drawrItem}
+                    disableTypography
+                    onClick={() => {
+                      setOpenDrawer(false);
+                      setValue(route.activeIndex);
+                    }}
+                  >
+                    <Link
+                      to={route.link}
+                      style={{
+                        color: "white",
+                        opacity: value === 1 ? 1 : null,
+                      }}
+                    >
+                      {route.name}
+                    </Link>
+                  </ListItemText>
                 </AccordionSummary>
-                <AccordionDetails>
+                <AccordionDetails classes={{ root: classes.expansionDetails }}>
                   <Grid container direction="column">
                     {menuOptions.map((route) => (
-                      <Grid item>
+                      <Grid item key={route.name}>
                         <ListItem
                           key={route.selectedIndex}
                           onClick={() => {
@@ -376,14 +425,25 @@ const Header = () => {
                           button
                           component={Link}
                           to={route.link}
-                          selected={value === route.activeIndex}
+                          selected={
+                            selectedIndex === route.selectedIndex &&
+                            value === 1 &&
+                            window.location.pathname !== "/services"
+                          }
                           classes={{ selected: classes.drawerItemSelected }}
                         >
                           <ListItemText
                             className={classes.drawrItem}
                             disableTypography
                           >
-                            {route.name}
+                            {route.name
+                              .split(" ")
+                              .filter((word) => word !== "Development")
+                              .join(" ")}
+                            <br />
+                            <span style={{ fontSize: "0.75rem" }}>
+                              Development
+                            </span>
                           </ListItemText>
                         </ListItem>
                       </Grid>
