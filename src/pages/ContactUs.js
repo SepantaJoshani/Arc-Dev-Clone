@@ -1,5 +1,4 @@
-import React, { Fragment, useState } from "react";
-import axios from "axios";
+import React, { Fragment, useCallback, useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/styles";
 import MuiAlert from "@material-ui/lab/Alert";
 import { Link } from "react-router-dom";
@@ -12,7 +11,6 @@ import {
   Dialog,
   DialogContent,
   CircularProgress,
-  Snackbar,
 } from "@material-ui/core";
 import background from "../assets/background.jpg";
 import mobileBackground from "../assets/mobileBackground.jpg";
@@ -22,6 +20,9 @@ import airplane from "../assets/send.svg";
 import ButtonArrow from "../components/ui/ButtonArrow";
 import { useContext } from "react";
 import { NavContext } from "../context/nav-context";
+import { AlertContext } from "../context/alert-context";
+import { useHttp } from "../hooks/use-http";
+import AlertSnack from "../components/Snackbar/AlertSnack";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -99,15 +100,16 @@ const ContactUs = () => {
   const [phone, setPhone] = useState("");
   const [phoneHelper, setPhoneHelper] = useState("");
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState({
-    open: false,
-    message: "",
-    backgroundColor: "",
-    severity: "",
-  });
-
   const [open, setOpen] = useState(false);
+  const { loading, sendHttp } = useHttp();
+  const alertCtx = useContext(AlertContext);
+  const {
+    open: isAlertOpen,
+    closeHandler,
+    message: alertMessage,
+    backgroundColor,
+    severity,
+  } = alertCtx;
 
   const onChange = (event) => {
     let isValid;
@@ -145,40 +147,24 @@ const ContactUs = () => {
     }
   };
 
-  const onConfirm = () => {
-    setLoading(true);
-    axios
-      .post("https://jsonplaceholder.typicode.com/posts", {
+  const onConfirm = useCallback(() => {
+    sendHttp(
+      "https://jsonplaceholder.typicode.com/posts",
+      {
         name,
         email,
         phone,
         message,
-      })
-      .then((res) => {
-        setLoading(false);
+      },
+      () => {
         setOpen(false);
         setEmail("");
         setMessage("");
         setPhone("");
         setName("");
-        setAlert({
-          open: true,
-          message: "Message Sent Successfully",
-          backgroundColor: "#4BB543",
-          severity: "success",
-        });
-        console.log(res.data);
-      })
-      .catch((err) => {
-        setLoading(false);
-        setAlert({
-          open: true,
-          message: "Sending Message Failed",
-          backgroundColor: "#FF3232",
-          severity: "error",
-        });
-      });
-  };
+      }
+    );
+  }, [sendHttp, name, email, phone, message]);
 
   const buttonContent = (
     <Fragment>
@@ -453,25 +439,13 @@ const ContactUs = () => {
         </DialogContent>
       </Dialog>
       {/*--------Snackbar part (optional place)--------*/}
-      <Snackbar
-        open={alert.open}
-        message={alert.message}
-        ContentProps={{
-          style: {
-            background: alert.backgroundColor,
-          },
-        }}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        onClose={() => setAlert({ ...alert, open: false })}
-        autoHideDuration={3000}
-      >
-        <Alert
-          onClose={() => setAlert({ ...alert, open: false })}
-          severity={alert.severity}
-        >
-          {alert.message}
-        </Alert>
-      </Snackbar>
+      <AlertSnack
+        open={isAlertOpen}
+        backgroundColor={backgroundColor}
+        onClose={closeHandler}
+        severity={severity}
+        alertMessage={alertMessage}
+      />
 
       {/*--------Call 2 Action Block (Right)--------*/}
       <Grid

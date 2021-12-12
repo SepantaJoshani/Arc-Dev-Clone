@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useCallback, useContext, useState } from "react";
 import {
   Button,
   Dialog,
@@ -9,7 +9,6 @@ import {
   useMediaQuery,
   TextField,
   Hidden,
-  Snackbar,
   CircularProgress,
 } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/styles";
@@ -25,9 +24,10 @@ import { websiteQuestions } from "../data/data";
 import { softwareQuestions } from "../data/data";
 import estimateAnimation from "../animations/estimateAnimation/data.json";
 import cloneDeep from "lodash.clonedeep";
-import axios from "axios";
-
+import { AlertContext } from "../context/alert-context";
+import AlertSnack from "../components/Snackbar/AlertSnack";
 import MuiAlert from "@material-ui/lab/Alert";
+import { useHttp } from "../hooks/use-http";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -86,14 +86,15 @@ const Estimate = () => {
   const [customFeatures, setCustomFeatures] = useState("");
   const [category, setCategory] = useState("");
   const [users, setUsers] = useState("");
-
-  const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState({
-    open: false,
-    message: "",
-    backgroundColor: "",
-    severity: "",
-  });
+  const { loading, sendHttp } = useHttp();
+  const alertCtx = useContext(AlertContext);
+  const {
+    open,
+    closeHandler,
+    message: alertMessage,
+    backgroundColor,
+    severity,
+  } = alertCtx;
 
   const defaultOptions = {
     loop: true,
@@ -359,10 +360,10 @@ const Estimate = () => {
     }
   };
 
-  const sendEstimate = () => {
-    setLoading(true);
-    axios
-      .post("https://jsonplaceholder.typicode.com/posts", {
+  const sendEstimate = useCallback(() => {
+    sendHttp(
+      "https://jsonplaceholder.typicode.com/posts",
+      {
         name,
         email,
         phone,
@@ -374,27 +375,29 @@ const Estimate = () => {
         features,
         customFeatures,
         users,
-      })
-      .then((res) => {
-        setLoading(false);
-        setAlert({
-          open: true,
-          message: "Estimate Placed Successfully",
-          backgroundColor: "#4BB543",
-          severity: "success",
-        });
+      },
+      () => {
         setIsDialogOpen(false);
-      })
-      .catch((err) => {
-        setLoading(false);
-        setAlert({
-          open: true,
-          message: "Sending Message Failed",
-          backgroundColor: "#FF3232",
-          severity: "error",
-        });
-      });
-  };
+        setEmail("");
+        setMessage("");
+        setPhone("");
+        setName("");
+      }
+    );
+  }, [
+    name,
+    email,
+    phone,
+    message,
+    total,
+    category,
+    service,
+    platforms,
+    features,
+    customFeatures,
+    users,
+    sendHttp,
+  ]);
 
   const estimateDisabled = () => {
     let disabled = true;
@@ -419,6 +422,8 @@ const Estimate = () => {
     }
     return disabled;
   };
+
+  //************ Software ************
 
   const softwareSelection = (
     <Hidden smDown>
@@ -483,7 +488,7 @@ const Estimate = () => {
       </Grid>
     </Hidden>
   );
-
+  //************ Website Selection ************
   const websiteSelection = (
     <Hidden smDown>
       <Grid item container direction="column">
@@ -862,25 +867,14 @@ const Estimate = () => {
       </Dialog>
 
       {/*--------Snackbar part (optional place)--------*/}
-      <Snackbar
-        open={alert.open}
-        message={alert.message}
-        ContentProps={{
-          style: {
-            background: alert.backgroundColor,
-          },
-        }}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        onClose={() => setAlert({ ...alert, open: false })}
-        autoHideDuration={2000}
-      >
-        <Alert
-          onClose={() => setAlert({ ...alert, open: false })}
-          severity={alert.severity}
-        >
-          {alert.message}
-        </Alert>
-      </Snackbar>
+  
+      <AlertSnack
+        open={open}
+        backgroundColor={backgroundColor}
+        onClose={closeHandler}
+        severity={severity}
+        alertMessage={alertMessage}
+      />
     </Grid>
   );
 };

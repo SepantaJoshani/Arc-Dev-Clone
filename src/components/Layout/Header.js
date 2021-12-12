@@ -1,13 +1,16 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   AppBar,
   Button,
   ClickAwayListener,
+  Grid,
   Grow,
   IconButton,
   List,
   ListItem,
   ListItemText,
-  Menu,
   MenuItem,
   MenuList,
   Paper,
@@ -33,6 +36,7 @@ import logo from "../../assets/logo.svg";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useContext } from "react";
 import { NavContext } from "../../context/nav-context";
+import { ExpandMore } from "@material-ui/icons";
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -178,6 +182,8 @@ const Header = () => {
     }
   }
 
+  /*********** Menu Options ***********/
+
   const menuOptions = useMemo(() => {
     return [
       {
@@ -200,6 +206,9 @@ const Header = () => {
       },
     ];
   }, []);
+
+  /*********** Routes ***********/
+
   const routes = useMemo(() => {
     return [
       { name: "Home", link: "/", activeIndex: 0 },
@@ -277,7 +286,7 @@ const Header = () => {
         Free Estimate
       </Button>
 
-      {/********** Popper Menu **********/}
+      {/*********** Popper Menu ***********/}
 
       <Popper
         open={openMenu}
@@ -298,7 +307,7 @@ const Header = () => {
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList
                   onMouseLeave={handleClose}
-                  onMouseOver={()=>setOpenMenu(true)}
+                  onMouseOver={() => setOpenMenu(true)}
                   disablePadding
                   // autoFocusItem={false}
                   id="simple-menu"
@@ -330,22 +339,10 @@ const Header = () => {
           </Grow>
         )}
       </Popper>
-
-      {/* <Menu
-        style={{ zIndex: 1302 }}
-        id="simple-menu"
-        anchorEl={anchorEl}
-        MenuListProps={{ onMouseLeave: handleClose }}
-        onClose={handleClose}
-        open={openMenu}
-        classes={{ paper: classes.menu }}
-        elevation={0}
-        keepMounted
-      ></Menu> */}
     </Fragment>
   );
 
-  /********** Drawer **********/
+  /*********** Drawer ***********/
 
   const drawer = (
     <Fragment>
@@ -359,25 +356,61 @@ const Header = () => {
       >
         <div className={classes.toolbarMargin} />
         <List disablePadding>
-          {routes.map((route) => (
-            <ListItem
-              key={route.activeIndex}
-              onClick={() => {
-                setOpenDrawer(false);
-                setValue(route.activeIndex);
-              }}
-              divider
-              button
-              component={Link}
-              to={route.link}
-              selected={value === route.activeIndex}
-              classes={{ selected: classes.drawerItemSelected }}
-            >
-              <ListItemText className={classes.drawrItem} disableTypography>
-                {route.name}
-              </ListItemText>
-            </ListItem>
-          ))}
+          {routes.map((route) =>
+            route.name === "Services" ? (
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMore />}>
+                  {route.name}
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Grid container direction="column">
+                    {menuOptions.map((route) => (
+                      <Grid item>
+                        <ListItem
+                          key={route.selectedIndex}
+                          onClick={() => {
+                            setOpenDrawer(false);
+                            setSelectedIndex(route.selectedIndex);
+                          }}
+                          divider
+                          button
+                          component={Link}
+                          to={route.link}
+                          selected={value === route.activeIndex}
+                          classes={{ selected: classes.drawerItemSelected }}
+                        >
+                          <ListItemText
+                            className={classes.drawrItem}
+                            disableTypography
+                          >
+                            {route.name}
+                          </ListItemText>
+                        </ListItem>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </AccordionDetails>
+              </Accordion>
+            ) : (
+              <ListItem
+                key={route.activeIndex}
+                onClick={() => {
+                  setOpenDrawer(false);
+                  setValue(route.activeIndex);
+                }}
+                divider
+                button
+                component={Link}
+                to={route.link}
+                selected={value === route.activeIndex}
+                classes={{ selected: classes.drawerItemSelected }}
+              >
+                <ListItemText className={classes.drawrItem} disableTypography>
+                  {route.name}
+                </ListItemText>
+              </ListItem>
+            )
+          )}
 
           <ListItem
             classes={{
