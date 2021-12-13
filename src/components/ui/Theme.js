@@ -4,17 +4,17 @@ const arcBlue = "#0B72B9";
 const arcOrange = "#FFBA60";
 const arcGrey = "#868686";
 
-export const theme = createTheme({
+const lightTheme = createTheme({
   palette: {
     common: {
-      blue: `${arcBlue}`,
-      orange: `${arcOrange}`,
+      blue: arcBlue,
+      orange: arcOrange,
       red: "#b92b27",
     },
     primary: {
-      main: `${arcBlue}`,
+      main: arcBlue,
     },
-    secondary: { main: `${arcOrange}` },
+    secondary: { main: arcOrange },
   },
   typography: {
     tab: {
@@ -51,7 +51,7 @@ export const theme = createTheme({
       fontWeight: 500,
       fontFamily: "Raleway",
       color: arcBlue,
-      lineHeight:1
+      lineHeight: 1,
     },
     subtitle1: {
       fontSize: "1.25rem",
@@ -106,3 +106,21 @@ export const theme = createTheme({
     },
   },
 });
+
+const darkTheme = createTheme({
+  ...lightTheme,
+  palette: {
+    type: "dark",
+    common: {
+      blue: arcBlue,
+      orange: arcOrange,
+      red: "#b92b27",
+    },
+    primary: {
+      main: arcBlue,
+    },
+    secondary: { main: arcOrange },
+  },
+});
+
+export { darkTheme, lightTheme };

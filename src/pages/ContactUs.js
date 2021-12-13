@@ -1,6 +1,5 @@
 import React, { Fragment, useCallback, useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/styles";
-import MuiAlert from "@material-ui/lab/Alert";
 import { Link } from "react-router-dom";
 import {
   Grid,
@@ -24,9 +23,6 @@ import { AlertContext } from "../context/alert-context";
 import { useHttp } from "../hooks/use-http";
 import AlertSnack from "../components/Snackbar/AlertSnack";
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
 
 const useStyles = makeStyles((theme) => ({
   background: {
